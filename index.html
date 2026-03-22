@@ -20,6 +20,14 @@ header {
 
 header h1 {
     color: #38bdf8;
+    margin-bottom: 5px; /* Kurangi margin bawah h1 */
+}
+
+/* Style untuk username @rahulmanshur */
+header p.username {
+    font-size: 0.9em; /* Ukuran lebih kecil */
+    color: #94a3b8; /* Warna abu-abu yang soft */
+    margin-top: 0; /* Hapus margin atas */
 }
 
 .container {
@@ -41,15 +49,15 @@ header h1 {
 }
 
 /* Style untuk input teks biasa (Nomor WhatsApp, Nomor DANA) */
-input[type="text"], input[type="number"] { /* Aku tambahkan type="number" juga jaga-jaga kalau kamu butuh */
+input[type="text"], input[type="number"] {
     width: 100%;
     padding: 10px;
     margin: 5px 0;
     border-radius: 8px;
     border: none;
-    box-sizing: border-box; /* Agar padding tidak menambah lebar total */
-    background: #334155; /* Warna background input */
-    color: white; /* Warna teks input */
+    box-sizing: border-box;
+    background: #334155;
+    color: white;
 }
 
 /* Style untuk textarea (tempat memasukkan banyak email) */
@@ -59,22 +67,22 @@ textarea {
     margin: 5px 0;
     border-radius: 8px;
     border: none;
-    min-height: 120px; /* Tinggi minimal textarea biar bisa nampung banyak email */
-    resize: vertical; /* User bisa resize tinggi textarea */
-    box-sizing: border-box; /* Agar padding tidak menambah lebar total */
-    background: #334155; /* Warna background textarea */
-    color: white; /* Warna teks textarea */
+    min-height: 120px;
+    resize: vertical;
+    box-sizing: border-box;
+    background: #334155;
+    color: white;
 }
 
 /* Style untuk placeholder agar terlihat di dark mode */
-::placeholder { /* Standar */
+::placeholder {
   color: #a0aec0;
-  opacity: 1; /* Firefox */
+  opacity: 1;
 }
-:-ms-input-placeholder { /* Edge */
+:-ms-input-placeholder {
   color: #a0aec0;
 }
-::-ms-input-placeholder { /* IE 10-11 */
+::-ms-input-placeholder {
   color: #a0aec0;
 }
 
@@ -88,8 +96,8 @@ textarea {
     font-weight: bold;
     border: none;
     cursor: pointer;
-    width: 100%; /* Tombol biar selebar input lainnya */
-    margin-top: 10px; /* Sedikit spasi di atas tombol */
+    width: 100%;
+    margin-top: 10px;
 }
 
 .notice {
@@ -105,7 +113,7 @@ textarea {
     border-radius: 10px;
     margin-top: 10px;
     animation: fadeIn 0.5s;
-    text-align: center; /* Teks status jadi di tengah */
+    text-align: center;
 }
 
 .pending {
@@ -130,7 +138,8 @@ textarea {
 
 <header>
     <h1>💼 JOB GMAIL</h1>
-
+    <!-- Tambahan username di bawah judul -->
+    <p class="username">@rahulmanshur</p>
 </header>
 
 <div class="container">
@@ -153,13 +162,12 @@ textarea {
     <h2>📲 Kirim Data</h2>
 
     <form onsubmit="kirimData(event)">
-        <!-- INI BAGIAN UTAMA YANG DIUBAH: field email jadi textarea -->
         <textarea id="email" placeholder="Masukkan setiap email di baris baru&#10;(contoh:&#10;email1@gmail.com&#10;email2@gmail.com&#10;...)" required></textarea>
-        <!-- Field jumlah akun DIHAPUS karena akan dihitung otomatis -->
         <input type="text" id="wa" placeholder="Nomor WhatsApp kamu" required>
         <input type="text" id="dana" placeholder="Nomor DANA kamu (untuk pembayaran)" required>
 
-        <button type="submit" class="btn">Kirim Data</button>
+        <!-- Teks tombol diubah jadi "Stor Sekarang" -->
+        <button type="submit" class="btn">Stor Sekarang</button>
     </form>
 
     <div id="statusBox"></div>
@@ -192,34 +200,27 @@ textarea {
 <!-- SCRIPT UNTUK MENGIRIM DATA KE WHATSAPP -->
 <script>
 function kirimData(e){
-    e.preventDefault(); // Mencegah form untuk refresh halaman
+    e.preventDefault();
 
     let emailsInput = document.getElementById("email").value;
-    // Pisahkan email berdasarkan baris baru, lalu filter baris kosong agar tidak dihitung
     let emailList = emailsInput.split('\n').filter(email => email.trim() !== '');
-    let jumlah = emailList.length; // Hitung jumlah email yang dimasukkan
+    let jumlah = emailList.length;
 
     let wa = document.getElementById("wa").value;
     let dana = document.getElementById("dana").value;
 
-    // Gabungkan daftar email untuk pesan WhatsApp agar rapi per baris
     let emailsFormatted = emailList.join('\n');
 
-    // Buat pesan untuk WhatsApp
     let pesan = `Halo admin, saya sudah setor akun:\n\nEmail:\n${emailsFormatted}\nJumlah: ${jumlah} akun\nWA: ${wa}\nDANA: ${dana}`;
 
-    // Pastikan nomor WhatsApp sudah benar dan pakai format internasional tanpa +
-    // Contoh: 6288229814051 (ini nomor admin yang tertera di kode awal kamu)
     let url = "https://wa.me/6288229814051?text=" + encodeURIComponent(pesan);
 
-    // Buka WhatsApp di tab/jendela baru
     window.open(url, "_blank");
 
-    // Tampilkan status pengiriman
     document.getElementById("statusBox").innerHTML =
         '<div class="status pending">⏳ Data dikirim ke WhatsApp admin</div>';
 
-    e.target.reset(); // Mengosongkan form setelah data dikirim
+    e.target.reset();
 }
 </script>
 
@@ -233,12 +234,12 @@ padding: 12px;
 border-radius: 10px;
 display: none;
 font-size: 14px;
-z-index: 1000; /* Pastikan notifikasi muncul di atas elemen lain */
+z-index: 1000;
 "></div>
 
 <script>
-const nama = ["Andi", "Rizky", "Dimas", "Aldi", "Fajar", "Budi", "Siti", "Ayu", "Joko"]; // Tambah beberapa nama
-const jumlah = ["Rp7.500", "Rp12.000", "Rp15.000", "Rp9.000", "Rp10.500", "Rp6.000"]; // Tambah beberapa jumlah
+const nama = ["Andi", "Rizky", "Dimas", "Aldi", "Fajar", "Budi", "Siti", "Ayu", "Joko"];
+const jumlah = ["Rp7.500", "Rp12.000", "Rp15.000", "Rp9.000", "Rp10.500", "Rp6.000"];
 
 function showNotif() {
     let n = nama[Math.floor(Math.random() * nama.length)];
@@ -250,10 +251,10 @@ function showNotif() {
 
     setTimeout(() => {
         notif.style.display = "none";
-    }, 4000); // Notifikasi akan hilang setelah 4 detik
+    }, 4000);
 }
 
-setInterval(showNotif, 8000); // Notifikasi muncul setiap 8 detik
+setInterval(showNotif, 8000);
 </script>
 
 </body>
