@@ -96,34 +96,38 @@ input {
 <body>
 
 <header>
-    <h1>💼 Job Stor Gmail</h1>
-    <h2>@rahulmanshur<h2>
-    <p>Kerja mudah hanya dari HP</p>
+    <h1>💼 JOB GMAIL</h1>
+
 </header>
 
 <div class="container">
 
-<script>
-function kirimData(e){
-    e.preventDefault();
+<div class="card">
+    <h2>✅ Kenapa Harus Join?</h2>
+    <p>✔ Sudah banyak yang bergabung</p>
+    <p>✔ Pembayaran cepat & real</p>
+    <p>✔ Proses mudah & aman</p>
+</div>
 
-    let email = document.getElementById("email").value;
-    let jumlah = document.getElementById("jumlah").value;
-    let wa = document.getElementById("wa").value;
-    let dana = document.getElementById("dana").value;
+<div class="card">
+    <h2>📌 Detail Pekerjaan</h2>
+    <p>✔ Membuat akun Gmail</p>
+    <p>✔ Bayaran Rp1.500 / akun</p>
+    <p>✔ Bisa dari HP</p>
+</div>
 
-    let pesan = `Halo admin, saya sudah setor akun:\n\nEmail: ${email}\nJumlah: ${jumlah}\nWA: ${wa}\nDANA: ${dana}`;
+<div class="card">
+    <h2>📲 Kirim Data</h2>
 
-    let url = "https://wa.me/62888229814051?text=" + encodeURIComponent(pesan);
+    <form onsubmit="kirimData(event)">
+        <input type="email" id="email" placeholder="Email kamu" required>
+        <input type="number" id="jumlah" placeholder="Jumlah akun" required>
+        <input type="text" id="wa" placeholder="Nomor WhatsApp" required>
+        <input type="text" id="dana" placeholder="Nomor DANA kamu (untuk pembayaran)" required>
 
-    window.open(url, "_blank");
+        <button type="submit" class="btn">Kirim Data</button>
+    </form>
 
-    document.getElementById("statusBox").innerHTML =
-        '<div class="status pending">⏳ Data dikirim ke WhatsApp admin</div>';
-
-    e.target.reset();
-}
-</script>
     <div id="statusBox"></div>
 
     <div class="notice">
@@ -148,7 +152,7 @@ function kirimData(e){
 </div>
 
 <div class="footer">
-    © 2026 Job Store Gmail
+    © 2026 Job Stor Gmail
 </div>
 
 <!-- STATUS SCRIPT -->
@@ -156,13 +160,19 @@ function kirimData(e){
 function kirimData(e){
     e.preventDefault();
 
-    document.getElementById("statusBox").innerHTML =
-        '<div class="status pending">⏳ Status: Menunggu Verifikasi Admin</div>';
+    let email = document.getElementById("email").value;
+    let jumlah = document.getElementById("jumlah").value;
+    let wa = document.getElementById("wa").value;
+    let dana = document.getElementById("dana").value;
 
-    setTimeout(() => {
-        document.getElementById("statusBox").innerHTML +=
-        '<div class="status">📩 Data berhasil dikirim! Tunggu proses pembayaran.</div>';
-    }, 1000);
+    let pesan = `Halo admin, saya sudah setor akun:\n\nEmail: ${email}\nJumlah: ${jumlah}\nWA: ${wa}\nDANA: ${dana}`;
+
+    let url = "https://wa.me/6288229814051?text=" + encodeURIComponent(pesan);
+
+    window.open(url, "_blank");
+
+    document.getElementById("statusBox").innerHTML =
+        '<div class="status pending">⏳ Data dikirim ke WhatsApp admin</div>';
 
     e.target.reset();
 }
