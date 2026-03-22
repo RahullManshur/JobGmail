@@ -41,6 +41,10 @@
             --activity-bg: #e6fffa;
             --activity-text: #2d3748;
             --activity-icon: #38b2ac;
+
+            /* Warna untuk Navigasi Header */
+            --nav-link-bg-inactive: #e0e0e0; /* Background abu-abu muda solid */
+            --nav-link-text-inactive: #4a5568; /* Teks gelap untuk non-aktif */
         }
 
         /* Keyframes untuk animasi */
@@ -139,18 +143,24 @@
             margin-right: 8px;
             font-size: 1.2em;
         }
+       .header.nav-links {
+            display: flex; /* Memastikan item navigasi inline */
+            gap: 10px; /* Jarak antar tombol */
+        }
        .header.nav-links a {
             text-decoration: none;
-            color: var(--text-secondary-dark);
-            font-weight: 500;
-            margin-left: 20px;
-            padding: 8px 15px;
-            border-radius: 8px;
+            background-color: var(--nav-link-bg-inactive); /* Default inactive background */
+            color: var(--nav-link-text-inactive); /* Default inactive text color */
+            font-weight: 600; /* Lebih tebal */
+            padding: 10px 18px; /* Padding tombol */
+            border-radius: 8px; /* Lebih rounded */
             transition: all 0.3s ease;
+            white-space: nowrap; /* Agar teks tidak pecah */
+            margin-left: 0; /* Menghilangkan margin-left yang tidak perlu */
         }
        .header.nav-links a:hover {
-            color: var(--primary-green);
-            background-color: rgba(55, 211, 150, 0.1);
+            color: var(--primary-green); /* Text color on hover */
+            background-color: rgba(55, 211, 150, 0.2); /* Slightly darker inactive background on hover */
         }
        .header.nav-links a.active {
             background-color: var(--primary-green);
@@ -515,10 +525,6 @@
        .activity-details {
             flex-grow: 1;
         }
-       .activity-details span {
-            display: block;
-            color: var(--activity-text);
-        }
        .activity-details.name {
             font-weight: 700;
             font-size: 1.05em;
@@ -619,7 +625,8 @@
                 gap: 10px;
             }
            .header.nav-links a {
-                margin: 0;
+                flex-grow: 1; /* Agar tombol mengisi lebar yang tersedia */
+                text-align: center;
             }
            .container,.live-activity-section,.hidden-section {
                 padding: 25px;
@@ -754,7 +761,7 @@
 
     <!-- Footer ala Buzzpoin -->
     <footer class="footer">
-        &copy; 2026 Job Store. All rights reserved. | <a href="#">Kebijakan Privasi</a> | <a href="#">Syarat & Ketentuan</a>
+        &copy; 2026 Job Gmail. All rights reserved. | <a href="#">Kebijakan Privasi</a> | <a href="#">Syarat & Ketentuan</a>
     </footer>
 
     <script>
@@ -809,7 +816,13 @@
 
     // Tampilkan section 'setor-gmail' secara default saat load halaman
     document.addEventListener('DOMContentLoaded', () => {
-        showSection('setor-gmail');
+        // Periksa apakah ada hash di URL saat halaman dimuat
+        const initialHash = window.location.hash.substring(1);
+        if (initialHash && sections[initialHash]) {
+            showSection(initialHash);
+        } else {
+            showSection('setor-gmail');
+        }
     });
 
     // ===============================================
