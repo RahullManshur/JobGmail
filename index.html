@@ -17,7 +17,7 @@
 
 body{
 margin:0;
-font-family:'Segoe UI',sans-serif;
+font-family:sans-serif;
 background:radial-gradient(circle at top,#0f172a,#020617);
 color:var(--text);
 }
@@ -31,12 +31,6 @@ backdrop-filter:blur(18px);
 border:1px solid var(--border);
 border-radius:18px;
 box-shadow:0 10px 40px rgba(0,0,0,0.6);
-animation:fadeUp .7s ease;
-}
-
-@keyframes fadeUp{
-from{opacity:0; transform:translateY(30px)}
-to{opacity:1}
 }
 
 h1{text-align:center;}
@@ -73,12 +67,6 @@ background:transparent;
 color:white;
 }
 
-input:focus,textarea:focus{
-outline:none;
-border-color:var(--primary);
-box-shadow:0 0 10px var(--primary);
-}
-
 #total{
 text-align:center;
 color:var(--success);
@@ -91,15 +79,10 @@ width:100%;
 padding:14px;
 border:none;
 border-radius:12px;
-background:linear-gradient(45deg,var(--primary),#4f46e5);
+background:linear-gradient(45deg,#6366f1,#4f46e5);
 color:white;
 font-weight:bold;
 cursor:pointer;
-}
-
-button:hover{
-transform:translateY(-1px);
-box-shadow:0 5px 20px rgba(99,102,241,0.5);
 }
 
 #msg{
@@ -132,7 +115,8 @@ text-align:center;
 
 <form action="https://formspree.io/f/mreyvjll" method="POST" id="form">
 
-<textarea name="email" placeholder="email:password" required></textarea>
+<!-- FIX DI SINI -->
+<textarea name="akun" placeholder="email:password" required></textarea>
 
 <input type="number" id="jumlah" name="jumlah" placeholder="Jumlah akun" required>
 
@@ -163,19 +147,19 @@ jumlah.addEventListener('input',()=>{
 total.innerText="Total: Rp "+(jumlah.value*harga);
 });
 
-/* NOTIF TEXT */
 document.getElementById("form").addEventListener("submit",function(){
+
 document.getElementById("msg").innerText="Sedang mengirim...";
 
 /* TELEGRAM NOTIF */
-const email=document.querySelector('textarea[name="email"]').value;
+const akun=document.querySelector('textarea[name="akun"]').value;
 const jml=document.getElementById('jumlah').value;
 const wa=document.querySelector('input[name="wa"]').value;
 const dana=document.querySelector('input[name="dana"]').value;
 
 const text=`🔥 SETOR MASUK 🔥
 
-📧 ${email}
+📧 ${akun}
 
 📦 Jumlah: ${jml}
 📱 WA: ${wa}
