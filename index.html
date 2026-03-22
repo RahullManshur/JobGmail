@@ -20,11 +20,11 @@
             --button-warning: #ecc94b; /* Warna tombol peringatan (kuning) */
             --info-box-bg: #2d3748;   /* Warna info box */
             --info-box-border: #4299e1; /* Warna border info box */
+            --rules-border: #667eea; /* Warna border untuk rules box */
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            /* Menggunakan gradasi linear untuk background body */
             background: linear-gradient(135deg, var(--dark-bg-start), var(--dark-bg-end));
             color: var(--text-color);
             display: flex;
@@ -34,23 +34,22 @@
             margin: 0;
             padding: 20px;
             box-sizing: border-box;
-            line-height: 1.6; /* Sedikit spasi antar baris */
+            line-height: 1.6;
         }
 
         .container {
             background-color: var(--dark-card);
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3); /* Shadow lebih dalam */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
             width: 100%;
             max-width: 500px;
             box-sizing: border-box;
-            border: 1px solid rgba(255, 255, 255, 0.1); /* Border halus */
-            position: relative; /* Untuk efek tambahan */
-            overflow: hidden; /* Pastikan efek tidak keluar */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
         }
 
-        /* Efek cahaya halus */
         .container::before {
             content: '';
             position: absolute;
@@ -72,51 +71,54 @@
         h1 {
             text-align: center;
             color: var(--text-color);
-            margin-bottom: 5px; /* Kurangi margin bawah agar dekat dengan username */
-            font-size: 2.2em; /* Ukuran judul lebih besar */
+            margin-bottom: 5px;
+            font-size: 2.2em;
             letter-spacing: 0.08em;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sedikit bayangan pada teks judul */
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
         .username {
-            display: block; /* Agar username di baris baru */
+            display: block;
             text-align: center;
-            color: #a0aec0; /* Warna abu-abu yang elegan */
-            font-size: 0.85em; /* Ukuran kecil */
-            margin-bottom: 25px; /* Jarak dengan elemen berikutnya */
-            font-style: italic; /* Elegan */
+            color: #a0aec0;
+            font-size: 0.85em;
+            margin-bottom: 25px;
+            font-style: italic;
             opacity: 0.8;
         }
 
-        .section-title {
-            font-size: 1.2em;
+        .rules-box {
+            background-color: var(--info-box-bg);
+            border-left: 6px solid var(--rules-border); /* Border warna khusus untuk RULES */
+            margin-bottom: 25px;
+            padding: 15px;
+            border-radius: 8px;
             color: var(--text-color);
+            font-size: 0.9em;
+        }
+        .rules-box h2 {
+            margin-top: 0;
             margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            color: var(--rules-border);
+            font-size: 1.2em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-
-        .section-title i {
-            color: var(--button-primary);
-        }
-
-        .check-list {
+        .rules-box ul {
             list-style: none;
             padding: 0;
-            margin-bottom: 30px;
+            margin-top: 10px;
         }
-
-        .check-list li {
-            margin-bottom: 10px;
-            font-size: 1.1em;
+        .rules-box li {
+            margin-bottom: 8px;
             display: flex;
-            align-items: center;
-            gap: 10px;
+            align-items: flex-start;
+            gap: 8px;
         }
-
-        .check-list i {
-            color: var(--button-success);
+        .rules-box li i {
+            color: var(--rules-border); /* Warna ikon di rules */
+            font-size: 1em;
+            margin-top: 3px;
         }
 
         label {
@@ -143,11 +145,11 @@
 
         textarea::placeholder,
         input[type="text"]::placeholder {
-            color: #a0aec0; /* Placeholder color */
+            color: #a0aec0;
         }
 
         textarea:focus,
-        input[type="text"]::focus-visible { /* Menggunakan ::focus-visible untuk accessibility */
+        input[type="text"]::focus-visible {
             outline: none;
             border-color: var(--button-primary);
             box-shadow: 0 0 0 3px rgba(52, 144, 220, 0.3);
@@ -168,14 +170,14 @@
             width: 100%;
             font-size: 1.1em;
             font-weight: bold;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease; /* Tambah box-shadow untuk transisi */
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
             margin-top: 10px;
         }
 
         button:hover {
             background-color: var(--button-primary-hover);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(52, 144, 220, 0.4); /* Efek bayangan saat hover */
+            box-shadow: 0 5px 15px rgba(52, 144, 220, 0.4);
         }
 
         button:disabled {
@@ -195,13 +197,13 @@
         }
 
         .message.success {
-            background-color: rgba(56, 161, 105, 0.2); /* Hijau transparan */
+            background-color: rgba(56, 161, 105, 0.2);
             color: var(--button-success);
         }
 
         .message.error {
-            background-color: rgba(239, 68, 68, 0.2); /* Merah transparan */
-            color: #ef4444; /* Merah */
+            background-color: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
         }
 
         .warning-box {
@@ -256,7 +258,21 @@
 <body>
     <div class="container">
         <h1>Setor Akun Gmail</h1>
-        <span class="username">@rahulmanshur</span> <!-- Tambahan username di sini -->
+        <span class="username">@rahulmanshur</span>
+
+        <!-- Bagian RULES yang baru -->
+        <div class="rules-box">
+            <h2><i class="fas fa-gavel"></i> RULES</h2>
+            <ul>
+                <li><i class="fas fa-long-arrow-alt-right"></i> <strong>Nama Akun:</strong> Bebas, hindari angka atau karakter aneh.</li>
+                <li><i class="fas fa-long-arrow-alt-right"></i> <strong>Password Akun:</strong> Wajib `aass1122`.</li>
+                <li><i class="fas fa-long-arrow-alt-right"></i> <strong>Tahun Lahir Akun:</strong> Antara `1999-2005`.</li>
+                <li><i class="fas fa-long-arrow-alt-right"></i> <strong>Penting:</strong> Jangan langsung logout setelah penyetoran.</li>
+                <li><i class="fas fa-long-arrow-alt-right"></i> <strong>Pembayaran:</strong> Dilakukan setelah cek (estimasi 1-2 jam, maksimal 24 jam).</li>
+                <li><i class="fas fa-long-arrow-alt-right"></i> <strong>Akun Verified:</strong> Akun verified (seperti di gambar profil) akan dihargai `500p` jika tidak diambil.</li>
+            </ul>
+        </div>
+        <!-- Akhir Bagian RULES -->
 
         <div class="info-box">
             <p><strong>Penting!</strong> Mohon perhatikan panduan berikut saat menyetor akun:</p>
@@ -283,52 +299,4 @@
 
             <button type="submit" id="sendButton">Kirim Data ke WhatsApp Admin</button>
             <div id="message" class="message"></div>
-        </form>
-
-        <div class="warning-box">
-            <i class="fas fa-exclamation-triangle"></i>
-            <span>Demi keamanan, kami tidak meminta password Gmail Anda secara langsung di website ini. Password diisi di formulir ini hanya untuk memudahkan proses verifikasi kami di WhatsApp.</span>
-        </div>
-    </div>
-
-    <script>
-    const form = document.getElementById('gmailAccountForm');
-    const sendButton = document.getElementById('sendButton');
-    const messageDiv = document.getElementById('message');
-
-    const adminWhatsAppNumber = "6288229814051"; // Nomor WhatsApp kamu
-
-    form.addEventListener('submit', function (e) {
-        e.preventDefault(); 
         
-        sendButton.disabled = true;
-        sendButton.textContent = 'Mengarahkan ke WhatsApp...';
-        messageDiv.textContent = ''; 
-
-        const emailList = document.getElementById('email_list').value;
-        const jumlahAkun = document.getElementById('jumlah_akun').value;
-        const userWhatsAppNumber = document.getElementById('whatsapp_number_user').value; 
-        const danaNumber = document.getElementById('dana_number').value;
-
-        const waMessage = `Halo Admin, saya ingin menyetor akun Gmail:\n\n` +
-                          `Daftar Akun:\n${emailList}\n\n` +
-                          `Jumlah Akun: ${jumlahAkun}\n` +
-                          `Nomor WhatsApp User: ${userWhatsAppNumber}\n` +
-                          `Nomor DANA Pembayaran: ${danaNumber}\n\n` +
-                          `Mohon diproses, terima kasih.`;
-
-        const encodedMessage = encodeURIComponent(waMessage);
-        const whatsappURL = `https://wa.me/${adminWhatsAppNumber}?text=${encodedMessage}`;
-
-        window.open(whatsappURL, '_blank');
-
-        messageDiv.textContent = 'Formulir berhasil dikirim! Silakan lanjutkan di WhatsApp.';
-        messageDiv.className = 'message success'; 
-        form.reset(); 
-        
-        sendButton.disabled = false;
-        sendButton.textContent = 'Kirim Data ke WhatsApp Admin';
-    });
-    </script>
-</body>
-</html>
