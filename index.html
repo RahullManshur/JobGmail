@@ -24,6 +24,11 @@
             --rules-border: #667eea; /* Warna border untuk rules box */
             --whatsapp-green: #25d366; /* Warna hijau WhatsApp */
             --whatsapp-green-hover: #1da851;
+            /* Tambahan: Warna untuk gradasi Instagram */
+            --instagram-gradient-start: #feda75;
+            --instagram-gradient-mid: #fa7e1e;
+            --instagram-gradient-end: #d62976;
+            --instagram-text: #fff;
         }
 
         /* Keyframes untuk animasi */
@@ -110,9 +115,41 @@
             text-align: center;
             color: #a0aec0;
             font-size: 0.85em;
-            margin-bottom: 25px;
+            margin-bottom: 5px; /* Disesuaikan untuk link IG */
             font-style: italic;
             opacity: 0.8;
+        }
+
+        /* Styling untuk link Instagram */
+        .instagram-link {
+            display: block;
+            text-align: center;
+            margin-bottom: 25px; /* Jarak ke elemen berikutnya */
+            opacity: 0;
+            animation: fadeIn 0.6s ease-out forwards; /* Animasi muncul */
+            animation-delay: 0.1s; /* Sedikit delay dari container */
+        }
+        .instagram-link a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            /* Gradasi warna Instagram */
+            background-image: linear-gradient(to right, var(--instagram-gradient-start), var(--instagram-gradient-mid), var(--instagram-gradient-end));
+            color: var(--instagram-text);
+            padding: 8px 15px;
+            border-radius: 20px; /* Bentuk pil agar tidak terlalu kotak */
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9em; /* Ukuran teks tidak terlalu besar */
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        .instagram-link a:hover {
+            transform: translateY(-2px) scale(1.03); /* Efek sedikit membesar saat hover */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
+        .instagram-link a i {
+            font-size: 1.1em; /* Ukuran ikon */
         }
 
         /* Styling dasar untuk semua box informasi (rules, info, warning) */
@@ -317,6 +354,14 @@
         <h1>Setor Akun Gmail</h1>
         <span class="username">@rahulmanshur</span>
 
+        <!-- Bagian Link Instagram -->
+        <div class="instagram-link">
+            <a href="https://www.instagram.com/rahulmanshur01?igsh=eWp6NGZ1cXVjZWY3&utm_source=qr" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-instagram"></i> Owner: @rahulmanshur01
+            </a>
+        </div>
+        <!-- Akhir Bagian Link Instagram -->
+
         <!-- Bagian RULES yang sudah dirapikan dan dianimasikan -->
         <div class="rules-box">
             <h2><i class="fas fa-gavel"></i> RULES</h2>
@@ -326,7 +371,7 @@
                 <li><i class="fas fa-long-arrow-alt-right"></i> <strong>Tahun Lahir Akun:</strong> Antara `1999-2005`.</li>
                 <li><i class="fas fa-long-arrow-alt-right"></i> <strong>Penting:</strong> Jangan langsung logout setelah penyetoran.</li>
                 <li><i class="fas fa-long-arrow-alt-right"></i> <strong>Pembayaran:</strong> Dilakukan setelah cek (estimasi 1-2 jam, maksimal 24 jam).</li>
-                <li><i class="fas fa-long-arrow-alt-right"></i> <strong>Akun Verified:</strong> Akun yang terkena verified tidak akan di Ambil/di Ambil dengan rate 500p.</li>
+                <li><i class="fas fa-long-arrow-alt-right"></i> <strong>Akun Verified:</strong> Akun yang terkena verified tidak akan di beli/di beli dengan rate 500p.</li>
             </ul>
         </div>
 
@@ -365,7 +410,7 @@
                 <i class="fab fa-whatsapp"></i> Gabung Grup Setor Gmail
             </a>
             <a href="https://whatsapp.com/channel/0029Vb7Pef20bIdwNmPREr1m" target="_blank" rel="noopener noreferrer">
-                <i class="fab fa-whatsapp"></i> Testimoni Store Akun Gmail
+                <i class="fab fa-whatsapp"></i> Testimoni Setor Akun Gmail
             </a>
         </div>
 
