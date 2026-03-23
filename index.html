@@ -49,6 +49,22 @@
             /* Variabel untuk efek gradien teks */
             --text-gradient-start: #37d396;
             --text-gradient-end: #2ab681;
+
+            /* Shadow untuk light mode */
+            --shadow-normal: rgba(0, 0, 0, 0.15);
+            --shadow-hover: rgba(0, 0, 0, 0.2);
+            --shadow-item: rgba(0, 0, 0, 0.05);
+            --shadow-item-hover: rgba(0, 0, 0, 0.08);
+            --shadow-button: rgba(55, 211, 150, 0.3);
+            --shadow-button-hover: rgba(55, 211, 150, 0.4);
+
+            /* Warna untuk mobile nav */
+            --mobile-nav-bg: #ffffff;
+            --mobile-nav-active-item-bg: #e0f2f7; /* Background item aktif di mobile nav */
+            --mobile-nav-active-item-text: var(--primary-green);
+            --mobile-nav-text-color: #1a202c;
+            --mobile-nav-text-secondary: #4a5568;
+            --mobile-nav-border: #e2e8f0;
         }
 
         /* Tema Dark Mode */
@@ -81,6 +97,22 @@
             /* Variabel untuk efek gradien teks di Dark Mode */
             --text-gradient-start: #37d396;
             --text-gradient-end: #81e6d9; /* Gradien yang lebih terang untuk dark mode */
+
+            /* Shadow untuk dark mode */
+            --shadow-normal: rgba(0, 0, 0, 0.3);
+            --shadow-hover: rgba(0, 0, 0, 0.5);
+            --shadow-item: rgba(0, 0, 0, 0.1);
+            --shadow-item-hover: rgba(0, 0, 0, 0.15);
+            --shadow-button: rgba(55, 211, 150, 0.4);
+            --shadow-button-hover: rgba(55, 211, 150, 0.5);
+
+            /* Warna untuk mobile nav dark mode */
+            --mobile-nav-bg: #2d3748;
+            --mobile-nav-active-item-bg: #4a5568;
+            --mobile-nav-active-item-text: var(--primary-green);
+            --mobile-nav-text-color: #f7fafc;
+            --mobile-nav-text-secondary: #cbd5e0;
+            --mobile-nav-border: #4a5568;
         }
 
         /* Keyframes untuk animasi */
@@ -127,6 +159,33 @@
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
+        
+        @keyframes rotateIcon {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Animasi khusus untuk hamburger menu */
+        @keyframes slideInMenu {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0%); }
+        }
+        @keyframes slideOutMenu {
+            from { transform: translateX(0%); }
+            to { transform: translateX(-100%); }
+        }
+        @keyframes itemFadeIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes hamburgerToX {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(90deg); } /* Putar ke X */
+        }
+        @keyframes xToHamburger {
+            0% { transform: rotate(90deg); }
+            100% { transform: rotate(0deg); } /* Putar kembali ke hamburger */
+        }
 
         /* Styling dasar untuk body */
         body {
@@ -147,19 +206,22 @@
             position: relative; /* Untuk gradasi di background */
             z-index: 1;
             perspective: 1000px; /* Untuk efek 3D saat hover di card */
+            transition: var(--color-transition); /* Global transition for dark mode */
         }
 
         /* Atur semua transisi warna secara global untuk dark mode */
         body,.container,.rules-box,.info-box,.warning-box,
         input, textarea, button,
-       .live-activity-section,.live-activity-item,.hidden-section,.footer,
-       .header.logo,.header.logo i, h1,.info-section h2,.info-section h2 i,
-       .rules-box h2,.rules-box h2 i,.rules-box li strong,.rules-box li i,
-       .info-box h2,.info-box h2 i,.info-box li i,.warning-box i,.warning-box span,
+    .live-activity-section,.live-activity-item,.hidden-section,.footer,
+    .header.logo,.header.logo i, h1,.price-info,.price-info i,.price-info span,.info-section h2,.info-section h2 i,
+    .rules-box h2,.rules-box h2 i,.rules-box li strong,.rules-box li i,
+    .info-box h2,.info-box h2 i,.info-box li i,.warning-box i,.warning-box span,
         label,.live-activity-section h2,.live-activity-item i,.activity-details.name,
-       .activity-details.amount,.activity-details.time,.hidden-section h2,
-       .hidden-section p,.hidden-section ul,.hidden-section ul li::before,.footer a,
-        #hamburgerMenuBtn, #mobileNavContent, #mobileNavContent ul li a,.dark-mode-toggle {
+    .activity-details.amount,.activity-details.time,.hidden-section h2,
+    .hidden-section p,.hidden-section ul,.hidden-section ul li::before,.footer a,
+        #hamburgerMenuBtn, #mobileNavContent, #mobileNavContent ul li a,.dark-mode-toggle,
+    .mobile-nav-item,.mobile-nav-item i,.mobile-nav-item span,
+    .mobile-nav-header.nav-logo-text { /* Tambahan untuk mobile nav */
             transition: var(--color-transition);
         }
 
@@ -178,6 +240,7 @@
             /* Parallax effect: background bergerak sedikit lebih lambat dari scroll */
             transform: translateZ(-1px) scale(2); /* Jarakkan dan besarkan untuk efek parallax */
             transform-origin: 50% 50%;
+            transition: background 0.5s ease, opacity 0.5s ease, transform 0.5s ease;
         }
         /* Gradasi background untuk dark mode */
         body.dark-mode::before {
@@ -187,7 +250,7 @@
         }
 
         /* Header */
-       .header {
+    .header {
             width: 100%;
             max-width: 600px;
             display: flex;
@@ -199,26 +262,29 @@
             animation-delay: 0.1s;
             position: relative;
         }
-       .header.logo {
+    .header.logo { /* Perbaikan selector */
             display: flex;
             align-items: center;
             font-weight: 700;
             font-size: 1.5em;
+            text-decoration: none;
             background: linear-gradient(90deg, var(--text-gradient-start), var(--text-gradient-end), var(--text-gradient-start));
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: gradientMove 5s ease infinite;
+            transition: var(--color-transition);
         }
-       .header.logo i {
+    .header.logo i { /* Perbaikan selector */
             color: var(--primary-green);
             margin-right: 8px;
             font-size: 1.2em;
             -webkit-text-fill-color: var(--primary-green);
+            transition: var(--color-transition);
         }
 
         /* Styling tombol dark mode */
-       .dark-mode-toggle {
+    .dark-mode-toggle {
             background-color: var(--bg-light);
             color: var(--text-dark);
             border: none;
@@ -231,33 +297,32 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px var(--shadow-item);
             margin-left: 10px;
             flex-shrink: 0;
             z-index: 100;
         }
 
-       .dark-mode-toggle:hover {
+    .dark-mode-toggle:hover {
             background-color: rgba(55, 211, 150, 0.2);
             color: var(--primary-green);
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(55, 211, 150, 0.3);
+            box-shadow: 0 4px 8px var(--shadow-button);
         }
 
-       .dark-mode-toggle i {
+    .dark-mode-toggle i {
             transition: transform 0.5s ease;
             color: var(--text-secondary-dark);
         }
 
         /* Animasi ikon saat ganti mode */
-        body.dark-mode.dark-mode-toggle i {
-            transform: rotate(180deg);
-            color: var(--text-dark);
+    .dark-mode-toggle.rotated i {
+            animation: rotateIcon 0.5s ease-in-out forwards;
         }
 
         /* Hamburger menu */
         #hamburgerMenuBtn {
-            display: none; /* Sembunyikan secara default di desktop */
+            display: flex; /* Selalu tampilkan */
             background: none;
             border: none;
             font-size: 1.8em;
@@ -266,27 +331,37 @@
             padding: 0;
             flex-shrink: 0;
             box-shadow: none;
-            transition: color 0.3s ease, transform 0.3s ease;
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
+            transition: var(--color-transition), transform 0.3s ease;
             z-index: 100;
             width: 44px;
             height: 44px;
-            display: flex;
             align-items: center;
             justify-content: center;
+            margin-right: 10px; /* Jarak dari logo */
+            position: relative; /* Untuk posisi ikon */
         }
 
         #hamburgerMenuBtn:hover {
             color: var(--primary-green);
-            transform: translateY(-50%) scale(1.1);
+            transform: scale(1.1);
+        }
+        
+        #hamburgerMenuBtn i {
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        /* Animasi ikon hamburger menjadi X dan sebaliknya */
+        #hamburgerMenuBtn.open i.fa-bars {
+            animation: hamburgerToX 0.3s forwards;
+            content: "\f00d"; /* Mengganti ikon menjadi fa-times (x) */
+        }
+        #hamburgerMenuBtn:not(.open) i.fa-times {
+            animation: xToHamburger 0.3s forwards;
+            content: "\f0c9"; /* Mengganti ikon kembali menjadi fa-bars */
         }
 
         /* Mobile Navigation Overlay */
         #mobileNav {
-            display: none; /* Sembunyikan secara default */
             position: fixed;
             top: 0;
             left: 0;
@@ -294,112 +369,185 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.7); /* Overlay gelap */
             z-index: 1000;
+            display: flex;
             justify-content: flex-start;
             align-items: flex-start;
-            opacity: 0;
             pointer-events: none;
-            transition: opacity 0.3s ease;
+            opacity: 0;
+            visibility: hidden; /* Sembunyikan secara default */
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
 
         #mobileNav.open {
             opacity: 1;
-            pointer-events: all;
-            display: flex; /* PENTING: Tampilkan overlay saat dibuka */
+            pointer-events: auto;
+            visibility: visible;
         }
 
         #mobileNavContent {
-            background: var(--bg-dark-card);
-            padding: 30px;
+            background: var(--mobile-nav-bg);
+            padding: 20px; /* Padding disesuaikan */
             border-radius: 0 16px 16px 0;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            width: 80%;
-            max-width: 300px;
+            box-shadow: 0 10px 30px var(--shadow-normal);
+            width: 85%; /* Tidak terlalu besar */
+            max-width: 300px; /* Batasi lebar maksimal */
             height: 100%;
-            text-align: center;
-            position: relative;
+            box-sizing: border-box; /* Pastikan padding dihitung dalam lebar */
             transform: translateX(-100%);
-            opacity: 0;
-            transition: transform 0.3s ease, opacity 0.3s ease;
+            transition: transform 0.3s ease, var(--color-transition); /* Tambah transisi untuk dark mode */
             display: flex;
             flex-direction: column;
-            align-items: center;
+            overflow-y: auto; /* Agar bisa discroll jika konten banyak */
+            padding-right: 15px; /* Sedikit padding tambahan di kanan */
         }
 
         #mobileNav.open #mobileNavContent {
-            transform: translateX(0);
-            opacity: 1;
+            animation: slideInMenu 0.3s ease-out forwards;
+        }
+        #mobileNav.closing #mobileNavContent {
+            animation: slideOutMenu 0.3s ease-in forwards;
         }
 
-       .close-btn {
+    .close-btn {
             position: absolute;
             top: 15px;
             right: 20px;
             background: none;
             border: none;
             font-size: 1.5em;
-            color: var(--text-secondary-dark);
+            color: var(--mobile-nav-text-secondary);
             cursor: pointer;
             transition: color 0.3s ease;
+            z-index: 1010; /* Pastikan di atas konten mobile nav */
         }
-       .close-btn:hover {
+  .close-btn:hover {
             color: var(--primary-green);
         }
 
-        #mobileNavContent h3 {
-            color: var(--primary-green);
-            font-size: 1.8em;
+    .mobile-nav-header {
+            display: flex;
+            align-items: center;
             margin-bottom: 25px;
+            padding-top: 0; /* Jarak dari atas dihilangkan karena close-btn di absolute */
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--mobile-nav-border);
+            position: relative; /* Untuk menampung close-btn jika diatur di sini */
+        }
+    .mobile-nav-header.nav-logo-icon { /* Perbaikan selector */
+            width: 35px;
+            height: 35px;
+            background-color: var(--primary-green);
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
             font-weight: 700;
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+    .mobile-nav-header.nav-logo-text { /* Perbaikan selector */
+            font-weight: 700;
+            font-size: 1.2em;
+            color: var(--mobile-nav-text-color);
         }
 
-        #mobileNavContent ul {
+        /* Profile info (dihilangkan dari HTML, tapi CSSnya tetap ada jaga-jaga) */
+     .profile-info { display: none; }
+
+    .mobile-nav-list {
             list-style: none;
             padding: 0;
             margin: 0;
             width: 100%;
+            flex-grow: 1; /* Agar daftar menu mengisi sisa ruang */
         }
 
-        #mobileNavContent ul li {
-            margin-bottom: 15px;
+    .mobile-nav-list li {
+            margin-bottom: 5px; /* Jarak antar item menu */
+            opacity: 0; /* Mulai tersembunyi untuk animasi */
+            transform: translateX(-20px); /* Mulai dari kiri */
+        }
+    .mobile-nav-list li.animated {
+            animation: itemFadeIn 0.3s ease-out forwards;
         }
 
-        #mobileNavContent ul li a {
-            display: block;
+    .mobile-nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 10px;
             text-decoration: none;
-            color: var(--text-dark);
-            font-weight: 600;
-            padding: 12px 15px;
+            color: var(--mobile-nav-text-color);
+            font-weight: 500;
             border-radius: 8px;
-            transition: all 0.3s ease;
-            background-color: var(--bg-light);
+            transition: all 0.2s ease, var(--color-transition);
+        }
+    .mobile-nav-item i {
+            margin-right: 15px;
+            font-size: 1.1em;
+            width: 25px; /* Lebar tetap untuk ikon */
+            text-align: center;
+            color: var(--mobile-nav-text-secondary);
+        }
+    .mobile-nav-item span {
+            flex-grow: 1;
         }
 
-        #mobileNavContent ul li a:hover {
-            background-color: var(--primary-green);
-            color: white;
-            box-shadow: 0 4px 10px rgba(55, 211, 150, 0.3);
+    .mobile-nav-item:hover {
+            background-color: var(--border-light);
+            color: var(--text-dark);
+        }
+    .mobile-nav-item.active {
+            background-color: var(--mobile-nav-active-item-bg);
+            color: var(--mobile-nav-active-item-text);
+        }
+    .mobile-nav-item.active i {
+            color: var(--mobile-nav-active-item-text);
+        }
+
+    .mobile-nav-item.logout {
+            color: #ef4444; /* Warna merah untuk logout */
+        }
+    .mobile-nav-item.logout i {
+            color: #ef4444;
+        }
+    .mobile-nav-item.logout:hover {
+            background-color: #fee2e2;
+            color: #dc2626;
+        }
+        body.dark-mode.mobile-nav-item.logout { /* Perbaikan selector dark mode */
+            color: #fca5a5;
+        }
+        body.dark-mode.mobile-nav-item.logout i { /* Perbaikan selector dark mode */
+            color: #fca5a5;
+        }
+        body.dark-mode.mobile-nav-item.logout:hover { /* Perbaikan selector dark mode */
+            background-color: #451a1a;
+            color: #f87171;
         }
 
         /* Kontainer utama website (form card) */
-       .container {
+    .container {
             background: linear-gradient(135deg, var(--card-gradient-start), var(--card-gradient-end));
             padding: 40px;
             border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 20px 40px var(--shadow-normal);
             width: 100%;
             max-width: 600px;
             box-sizing: border-box;
             border: 1px solid var(--border-light);
             position: relative;
             overflow: hidden;
-            animation: popInScale 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            animation-delay: 0.2s;
-            transition: all 0.3s ease;
+            /* animation: fadeIn 0.8s ease-out forwards; handled by JS */
+            /* animation-delay: 0.2s; */
+            transition: all 0.3s ease, var(--color-transition);
             margin-bottom: 30px;
             transform-style: preserve-3d;
+            opacity: 0; /* Default hidden for JS animation */
+            transform: translateY(20px);
         }
-       .container:hover {
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+    .container:hover {
+            box-shadow: 0 25px 50px var(--shadow-hover);
             transform: translateY(-5px) rotateX(1deg) rotateY(-1deg);
         }
 
@@ -407,34 +555,34 @@
         h1 {
             text-align: center;
             color: var(--text-dark);
-            margin-bottom: 30px;
+            margin-bottom: 10px; /* Kurangi margin untuk harga */
             font-size: 2.8em;
             font-weight: 800;
             letter-spacing: -0.03em;
             text-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
             line-height: 1.1;
+            transition: var(--color-transition);
+        }
+        
+       .price-info {
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-bottom: 30px;
+            opacity: 0; /* Untuk animasi */
+            transform: translateY(20px); /* Untuk animasi */
+            animation: fadeIn 0.6s ease-out forwards; /* Akan dipicu oleh JS */
+            animation-delay: 0.8s; /* Delay default, bisa di-override JS */
+            transition: var(--color-transition);
+        }
+       .price-info i {
+            margin-right: 8px;
+            color: var(--primary-green);
         }
 
         /* Section info/rules/warning */
-       .info-section {
-            margin-bottom: 30px;
-            opacity: 0;
-            animation: fadeIn 0.6s ease-out forwards;
-            animation-delay: 0.4s;
-        }
-       .info-section h2 {
-            font-size: 1.4em;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-       .info-section h2 i {
-            color: var(--primary-green);
-        }
-       .rules-box,.info-box,.warning-box {
+    .rules-box,.info-box,.warning-box {
             background-color: var(--bg-light);
             padding: 20px 25px;
             border-radius: 12px;
@@ -442,91 +590,83 @@
             font-size: 0.95em;
             margin-bottom: 20px;
             border: 1px solid var(--border-light);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px var(--shadow-item);
+            transition: all 0.3s ease, var(--color-transition);
             opacity: 0;
             transform: translateY(20px);
         }
 
-        /* Staggered animation classes */
-       .animated-item-1 { animation: fadeIn 0.6s ease-out forwards; animation-delay: 0.4s; }
-       .animated-item-2 { animation: fadeIn 0.6s ease-out forwards; animation-delay: 0.6s; }
-       .animated-item-3 { animation: fadeIn 0.6s ease-out forwards; animation-delay: 0.8s; }
-       .animated-item-4 { animation: fadeIn 0.6s ease-out forwards; animation-delay: 1.0s; }
-       .animated-item-5 { animation: fadeIn 0.6s ease-out forwards; animation-delay: 1.2s; }
-       .animated-item-6 { animation: fadeIn 0.6s ease-out forwards; animation-delay: 1.4s; }
-
-       .rules-box:hover,.info-box:hover,.warning-box:hover {
+    .rules-box:hover,.info-box:hover,.warning-box:hover {
             transform: translateY(-5px) scale(1.01);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 25px var(--shadow-item-hover);
         }
-       .rules-box {
+    .rules-box {
             background-color: var(--rules-box-bg);
             border-left: 5px solid var(--rules-box-border);
         }
-       .rules-box h2 {
+    .rules-box h2 {
             color: var(--text-dark);
             margin-bottom: 10px;
         }
-       .rules-box h2 i {
+    .rules-box h2 i {
             color: var(--rules-box-border);
             font-size: 1.1em;
             animation: pulseLight 1.5s infinite;
         }
-       .rules-box ul {
+    .rules-box ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-       .rules-box li {
+    .rules-box li {
             margin-bottom: 10px;
             display: flex;
             align-items: flex-start;
             gap: 10px;
             line-height: 1.5;
         }
-       .rules-box li:last-child { margin-bottom: 0; }
-       .rules-box li strong {
+    .rules-box li:last-child { margin-bottom: 0; }
+    .rules-box li strong {
             color: var(--text-dark);
         }
-       .rules-box li i {
+    .rules-box li i {
             color: var(--primary-green);
             font-size: 1em;
             margin-top: 3px;
         }
 
-       .info-box {
+    .info-box {
             background-color: var(--info-box-bg);
             border-left: 5px solid var(--info-box-border);
         }
-       .info-box h2 {
+    .info-box h2 {
             color: var(--text-dark);
             margin-bottom: 10px;
         }
-       .info-box h2 i {
+    .info-box h2 i {
             color: var(--info-box-border);
             font-size: 1.1em;
         }
-       .info-box ul {
+    .info-box ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-       .info-box li {
+    .info-box li {
             margin-bottom: 8px;
             display: flex;
             align-items: flex-start;
             gap: 10px;
             line-height: 1.5;
         }
-       .info-box li:last-child { margin-bottom: 0; }
-       .info-box li i {
+    .info-box li:last-child { margin-bottom: 0; }
+    .info-box li i {
             color: var(--primary-green);
             font-size: 1em;
             margin-top: 3px;
         }
 
-       .warning-box {
+    .warning-box {
             background-color: var(--warning-box-bg);
             border-left: 5px solid var(--warning-box-border);
             display: flex;
@@ -534,22 +674,24 @@
             align-items: center;
             gap: 15px;
             margin-top: 25px;
+            opacity: 0;
+            transform: translateY(20px);
         }
-       .warning-box i {
+    .warning-box i {
             color: var(--warning-box-border);
             font-size: 1.5em;
             flex-shrink: 0;
             animation: shakeInput 0.8s infinite alternate;
         }
-       .warning-box span {
+    .warning-box span {
             color: var(--text-secondary-dark);
         }
 
         /* Form styling */
         form {
             margin-top: 30px;
-            animation: fadeIn 0.8s ease-out forwards;
-            animation-delay: 0.8s;
+            opacity: 0;
+            transform: translateY(20px);
         }
         label {
             display: block;
@@ -570,7 +712,7 @@
             font-size: 1em;
             background-color: var(--bg-light);
             color: var(--text-dark);
-            transition: all 0.3s ease;
+            transition: all 0.3s ease, var(--color-transition);
             box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
         }
         textarea::placeholder,
@@ -591,7 +733,7 @@
         }
 
         /* Styling untuk tombol submit */
-        button {
+        button[type="submit"] {
             background-color: var(--primary-green);
             color: white;
             padding: 15px 25px;
@@ -604,14 +746,14 @@
             letter-spacing: 0.03em;
             transition: all 0.3s ease;
             margin-top: 15px;
-            box-shadow: 0 8px 20px rgba(55, 211, 150, 0.3);
+            box-shadow: 0 8px 20px var(--shadow-button);
         }
-        button:hover {
+        button[type="submit"]:hover {
             background-color: var(--primary-green-dark);
             transform: translateY(-3px) scale(1.01);
-            box-shadow: 0 12px 25px rgba(55, 211, 150, 0.4);
+            box-shadow: 0 12px 25px var(--shadow-button-hover);
         }
-        button:disabled {
+        button[type="submit"]:disabled {
             background-color: var(--border-light);
             color: var(--text-secondary-dark);
             cursor: not-allowed;
@@ -620,7 +762,7 @@
         }
 
         /* Styling untuk pesan feedback (sukses/error) */
-       .message {
+    .message {
             margin-top: 25px;
             text-align: center;
             font-weight: 600;
@@ -629,28 +771,28 @@
             border-radius: 10px;
             animation: fadeIn 0.5s ease-out forwards;
         }
-       .message.success {
+    .message.success {
             background-color: rgba(40, 167, 69, 0.1);
             color: var(--whatsapp-green);
             border: 1px solid var(--whatsapp-green);
         }
-       .message.error {
+    .message.error {
             background-color: rgba(220, 53, 69, 0.1);
             color: #dc3545;
             border: 1px solid #dc3545;
         }
 
         /* Styling untuk link WhatsApp (grup & testimoni) */
-       .whatsapp-links {
+    .whatsapp-links {
             display: flex;
             flex-direction: column;
             gap: 15px;
             margin-top: 20px;
             opacity: 0;
             transform: translateY(20px);
-            animation-delay: 1.0s;
+            /* animation-delay: 1.0s; handled by JS */
         }
-       .whatsapp-links a {
+    .whatsapp-links a {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -665,37 +807,38 @@
             transition: all 0.3s ease;
             box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3);
         }
-       .whatsapp-links a:hover {
+    .whatsapp-links a:hover {
             background-color: var(--whatsapp-green-hover);
             transform: translateY(-3px) scale(1.01);
             box-shadow: 0 10px 20px rgba(37, 211, 102, 0.4);
         }
-       .whatsapp-links a i {
+    .whatsapp-links a i {
             font-size: 1.3em;
         }
 
         /* Live Activity Section */
-       .live-activity-section {
+    .live-activity-section {
             width: 100%;
             max-width: 600px;
-            background-color: var(--bg-dark-card);
+            background: linear-gradient(135deg, var(--card-gradient-start), var(--card-gradient-end)); /* Menggunakan gradient card */
             padding: 30px;
             border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px var(--shadow-normal);
             margin-bottom: 40px;
             opacity: 0;
-            animation: fadeIn 0.8s ease-out forwards;
-            animation-delay: 1.2s;
+            transform: translateY(20px); /* Initial state for animation */
+            /* animation: fadeIn 0.8s ease-out forwards; handled by JS for staggered effect */
+            /* animation-delay: 1.2s; */
             border: 1px solid var(--border-light);
             transform-style: preserve-3d;
-            transition: all 0.3s ease;
+            transition: all 0.3s ease, var(--color-transition);
         }
-       .live-activity-section:hover {
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    .live-activity-section:hover {
+            box-shadow: 0 15px 35px var(--shadow-hover);
             transform: translateY(-3px) rotateX(0.5deg) rotateY(-0.5deg);
         }
 
-       .live-activity-section h2 {
+    .live-activity-section h2 {
             text-align: center;
             font-size: 1.8em;
             font-weight: 800;
@@ -703,7 +846,7 @@
             margin-bottom: 25px;
             position: relative;
         }
-       .live-activity-section h2::after {
+    .live-activity-section h2::after {
             content: '';
             display: block;
             width: 60px;
@@ -712,12 +855,12 @@
             margin: 10px auto 0;
             border-radius: 2px;
         }
-       .live-activity-list {
+    .live-activity-list {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-       .live-activity-item {
+    .live-activity-item {
             display: flex;
             align-items: center;
             background-color: var(--activity-bg);
@@ -725,92 +868,93 @@
             border-radius: 8px;
             margin-bottom: 10px;
             border-left: 5px solid var(--activity-icon);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 8px var(--shadow-item);
             animation: newActivity 0.5s ease-out forwards;
             opacity: 0;
             transform: translateY(10px);
-            transition: all 0.2s ease;
+            transition: all 0.2s ease, var(--color-transition);
         }
-       .live-activity-item:last-child {
+    .live-activity-item:last-child {
             margin-bottom: 0;
         }
-       .live-activity-item:hover {
+    .live-activity-item:hover {
             transform: translateY(-2px) scale(1.02);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 12px var(--shadow-item-hover);
         }
-       .live-activity-item i {
+    .live-activity-item i {
             color: var(--activity-icon);
             font-size: 1.4em;
             margin-right: 15px;
         }
-       .activity-details {
+    .activity-details {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
         }
-       .activity-details.name {
+    .activity-details.name { /* Perbaikan selector */
             font-weight: 700;
             font-size: 1.05em;
         }
-       .activity-details.amount {
+    .activity-details.amount { /* Perbaikan selector */
             color: var(--primary-green);
             font-weight: 600;
         }
-       .activity-details.time {
+    .activity-details.time { /* Perbaikan selector */
             font-size: 0.85em;
             color: var(--text-secondary-dark);
         }
 
         /* Hidden section for Tentang Kami and FAQ */
-       .hidden-section {
+    .hidden-section {
             display: none;
             background: linear-gradient(135deg, var(--card-gradient-start), var(--card-gradient-end));
             padding: 40px;
             border-radius: 16px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 20px 40px var(--shadow-normal);
             width: 100%;
             max-width: 600px;
             box-sizing: border-box;
             border: 1px solid var(--border-light);
             margin-bottom: 30px;
             opacity: 0;
-            animation: popInScale 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            animation-delay: 0.2s;
+            transform: translateY(20px); /* Initial state for animation */
+            /* animation: popInScale 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; */
+            /* animation-delay: 0.2s; */
             transform-style: preserve-3d;
-            transition: all 0.3s ease;
+            transition: all 0.3s ease, var(--color-transition);
         }
-       .hidden-section:hover {
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+    .hidden-section:hover {
+            box-shadow: 0 25px 50px var(--shadow-hover);
             transform: translateY(-5px) rotateX(1deg) rotateY(-1deg);
         }
 
-       .hidden-section h2 {
+    .hidden-section h2 {
             font-size: 2.2em;
             font-weight: 800;
             color: var(--text-dark);
             margin-bottom: 20px;
             text-align: center;
         }
-       .hidden-section p,.hidden-section ul {
+    .hidden-section p,.hidden-section ul {
             color: var(--text-secondary-dark);
             font-size: 1em;
             line-height: 1.8;
             margin-bottom: 15px;
         }
-       .hidden-section ul {
+    .hidden-section ul {
             list-style: none;
             padding: 0;
         }
-       .hidden-section ul li {
+    .hidden-section ul li {
             position: relative;
             padding-left: 25px;
             margin-bottom: 8px;
             opacity: 0;
             transform: translateY(10px);
-            animation: fadeIn 0.5s ease-out forwards;
-            animation-delay: var(--li-delay);
+            /* animation: fadeIn 0.5s ease-out forwards; handled by JS */
+            /* animation-delay: var(--li-delay); */
         }
-       .hidden-section ul li::before {
+    .hidden-section ul li::before {
             content: '\f05a';
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
@@ -820,7 +964,7 @@
         }
 
         /* Footer */
-       .footer {
+    .footer {
             width: 100%;
             max-width: 600px;
             text-align: center;
@@ -832,13 +976,13 @@
             animation: fadeIn 0.8s ease-out forwards;
             animation-delay: 1.5s;
         }
-       .footer a {
+    .footer a {
             color: var(--primary-green);
             text-decoration: none;
             font-weight: 600;
             transition: color 0.3s ease;
         }
-       .footer a:hover {
+    .footer a:hover {
             color: var(--primary-green-dark);
         }
 
@@ -847,32 +991,25 @@
             body {
                 padding: 15px;
             }
-           .header {
+       .header {
                 justify-content: space-between;
                 padding: 15px 0;
                 align-items: center;
-                position: static;
+                position: static; /* Biarkan header static di mobile */
             }
-           .header.logo {
-                position: static;
-                transform: none;
-                flex-grow: 1;
+       .header.logo {
+                flex-grow: 1; /* Agar logo bisa mengambil ruang di tengah */
                 text-align: center;
-            }
-            /* Navigasi utama (nav-links) tidak diperlukan di mobile, karena sudah di dalam hamburger */
-           .header.nav-links {
-                display: none;
-            }
-            #hamburgerMenuBtn {
-                display: flex;
-                position: static;
-                transform: none;
-                order: -1;
-            }
-           .dark-mode-toggle {
                 margin-left: 0;
             }
-           .container,.live-activity-section,.hidden-section {
+            #hamburgerMenuBtn {
+                margin-right: 0;
+                order: -1; /* Pindahkan hamburger ke kiri */
+            }
+       .dark-mode-toggle {
+                margin-left: 0;
+            }
+       .container, #live-activity-section,.hidden-section {
                 padding: 25px;
                 border-radius: 12px;
             }
@@ -880,10 +1017,10 @@
                 font-size: 2.2em;
                 margin-bottom: 20px;
             }
-           .rules-box,.info-box,.warning-box {
+       .rules-box,.info-box,.warning-box {
                 padding: 18px 20px;
             }
-           .warning-box {
+       .warning-box {
                 flex-direction: column;
                 text-align: center;
             }
@@ -896,9 +1033,9 @@
         <button id="hamburgerMenuBtn" aria-label="Open menu">
             <i class="fas fa-bars"></i>
         </button>
-        <div class="logo">
-            <i class="fas fa-money-check-alt"></i> Job Setor Gmail
-        </div>
+        <a href="#setor-gmail" class="logo">
+            <i class="fas fa-money-check-alt"></i> Job Store
+        </a>
         <!-- TOMBOL DARK MODE -->
         <button id="darkModeToggle" class="dark-mode-toggle" aria-label="Toggle dark mode">
             <i class="fas fa-moon"></i>
@@ -908,22 +1045,31 @@
     <!-- Mobile Navigation Overlay -->
     <div id="mobileNav" class="mobile-nav-overlay">
         <div id="mobileNavContent">
-            <button class="close-btn" id="closeMobileNavBtn"><i class="fas fa-times"></i></button>
-            <h3>Navigasi</h3>
-            <ul>
-                <li><a href="#setor-gmail" class="mobile-nav-link" data-target="setor-gmail">Setor Gmail</a></li>
-                <li><a href="#tentang-kami" class="mobile-nav-link" data-target="tentang-kami">Tentang Kami</a></li>
-                <li><a href="#faq" class="mobile-nav-link" data-target="faq">FAQ</a></li>
-                <li><a href="#komunitas" class="mobile-nav-link" data-target="komunitas">Komunitas</a></li>
+            <!-- Header di dalam menu mobile -->
+            <div class="mobile-nav-header">
+                <div class="nav-logo-icon">B</div>
+                <div class="nav-logo-text">Job Store</div>
+                <!-- Tombol close sudah ada di luar div ini, di bagian #mobileNavContent -->
+            </div>
+            
+            <!-- Daftar Menu Navigasi Mobile -->
+            <ul class="mobile-nav-list">
+                <li><a href="#setor-gmail" class="mobile-nav-item" data-target="setor-gmail"><i class="fas fa-home"></i> <span>Beranda</span></a></li>
+                <li><a href="#tentang-kami" class="mobile-nav-item" data-target="tentang-kami"><i class="fas fa-info-circle"></i> <span>Tentang Kami</span></a></li>
+                <li><a href="#faq" class="mobile-nav-item" data-target="faq"><i class="fas fa-question-circle"></i> <span>FAQ</span></a></li>
+                <li><a href="#komunitas" class="mobile-nav-item" data-target="komunitas"><i class="fas fa-users"></i> <span>Komunitas</span></a></li>
             </ul>
         </div>
+        <!-- Tombol close di luar mobileNavContent, untuk klik di area overlay -->
+        <button class="close-btn" id="closeMobileNavBtnOutside" aria-label="Close menu"><i class="fas fa-times"></i></button> 
     </div>
 
     <div class="container" id="setor-gmail">
         <h1>Setor Akun Gmail Anda Sekarang!</h1>
+        <p class="price-info"><i class="fas fa-money-bill-wave"></i> Harga per akun: Rp 1.500,-</p>
 
         <!-- Bagian RULES -->
-        <div class="rules-box animated-item-1">
+        <div class="rules-box">
             <h2><i class="fas fa-gavel"></i> Rules Penting</h2>
             <ul>
                 <li><i class="fas fa-info-circle"></i> <strong>Nama Akun:</strong> Bebas, hindari angka atau karakter aneh.</li>
@@ -936,7 +1082,7 @@
         </div>
 
         <!-- Bagian Informasi Penting -->
-        <div class="info-box animated-item-2">
+        <div class="info-box">
             <h2><i class="fas fa-lightbulb"></i> Tips Sebelum Menyetor</h2>
             <p><strong>Perhatian!</strong> Mohon perhatikan panduan berikut saat menyetor akun agar proses lancar:</p>
             <ul>
@@ -948,7 +1094,7 @@
         </div>
 
         <!-- Form penyetoran akun Gmail -->
-        <form id="gmailAccountForm" class="animated-item-3">
+        <form id="gmailAccountForm">
             <label for="email_list"><i class="fas fa-envelope"></i> Setor Akun Gmail Anda:</label>
             <textarea id="email_list" name="email_list" placeholder="Masukkan setiap akun di baris baru.&#10;Contoh:&#10;user1@gmail.com:password123&#10;user2@gmail.com:password456" required></textarea>
 
@@ -969,14 +1115,14 @@
         </form>
 
         <!-- Kotak peringatan keamanan -->
-        <div class="warning-box animated-item-5">
+        <div class="warning-box">
             <i class="fas fa-shield-alt"></i>
             <span>Demi keamanan dan privasi, kami tidak meminta password Gmail Anda secara langsung di website ini. Password diisi di formulir ini hanya untuk memudahkan proses verifikasi kami di WhatsApp.</span>
         </div>
     </div>
 
     <!-- Live Activity Section -->
-    <section class="live-activity-section animated-item-6" id="live-activity-section">
+    <section class="live-activity-section" id="live-activity-section">
         <h2><i class="fas fa-chart-line"></i> Aktivitas Pembayaran Terkini</h2>
         <ul class="live-activity-list" id="activity-list">
             <!-- Aktivitas pembayaran akan muncul di sini -->
@@ -1017,12 +1163,12 @@
                 <i class="fab fa-whatsapp"></i> Testimoni Setor Akun Gmail
             </a>
         </div>
-        <p style="margin-top: 20px;">Kami senang Anda menjadi bagian dari keluarga Job Store!</p>
+        <p style="margin-top: 20px;">Kami senang Anda menjadi bagian dari keluarga Job Setor!</p>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
-        &copy; 2026 Job Setor. All rights reserved. | <a href="#">Kebijakan Privasi</a> | <a href="#">Syarat & Ketentuan</a>
+        &copy; 2026 Job Store. All rights reserved. | <a href="#">Kebijakan Privasi</a> | <a href="#">Syarat & Ketentuan</a>
     </footer>
 
     <script>
@@ -1031,106 +1177,156 @@
         // ===============================================
         const darkModeToggle = document.getElementById('darkModeToggle');
         const body = document.body;
+        const hamburgerMenuIcon = document.getElementById('hamburgerMenuBtn').querySelector('i');
 
-        // Cek preferensi user dari local storage
-        const prefersDarkMode = localStorage.getItem('darkMode') === 'true';
-
-        // Terapkan mode awal
-        if (prefersDarkMode) {
-            body.classList.add('dark-mode');
-            darkModeToggle.querySelector('i').className = 'fas fa-sun'; // Ganti ikon jadi matahari
-        } else {
-            darkModeToggle.querySelector('i').className = 'fas fa-moon'; // Ganti ikon jadi bulan
+        // Fungsi untuk menerapkan tema
+        function applyTheme(isDark) {
+            if (isDark) {
+                body.classList.add('dark-mode');
+                darkModeToggle.querySelector('i').className = 'fas fa-sun'; // Ganti ikon jadi matahari
+                hamburgerMenuIcon.style.color = 'var(--text-dark)'; // Pastikan ikon hamburger juga berubah warna
+            } else {
+                body.classList.remove('dark-mode');
+                darkModeToggle.querySelector('i').className = 'fas fa-moon'; // Ganti ikon jadi bulan
+                hamburgerMenuIcon.style.color = 'var(--text-dark)'; // Pastikan ikon hamburger juga berubah warna
+            }
         }
+
+        // Cek preferensi user dari local storage saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', () => {
+            const prefersDarkMode = localStorage.getItem('darkMode') === 'true';
+            applyTheme(prefersDarkMode);
+        });
 
         // Event listener untuk tombol dark mode
         darkModeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-mode'); // Toggle class dark-mode di body
-            const isDarkMode = body.classList.contains('dark-mode');
+            darkModeToggle.classList.add('rotated'); // Tambahkan kelas untuk animasi putar
 
-            // Simpan preferensi di local storage
+            const isDarkMode =!body.classList.contains('dark-mode'); // Dapatkan status mode setelah toggle
+            applyTheme(isDarkMode);
             localStorage.setItem('darkMode', isDarkMode);
 
-            // Ganti ikon sesuai mode
-            if (isDarkMode) {
-                darkModeToggle.querySelector('i').className = 'fas fa-sun'; // Ganti ikon jadi matahari
-            } else {
-                darkModeToggle.querySelector('i').className = 'fas fa-moon'; // Ganti ikon jadi bulan
-            }
+            // Hapus kelas 'rotated' setelah animasi selesai
+            setTimeout(() => {
+                darkModeToggle.classList.remove('rotated');
+            }, 500); // Sesuaikan dengan durasi transisi 'transform' ikon di CSS
         });
 
         // ===============================================
         // FUNGSI NAVIGASI & HAMBURGER MENU
         // ===============================================
-        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-item');
         const hamburgerMenuBtn = document.getElementById('hamburgerMenuBtn');
         const mobileNav = document.getElementById('mobileNav');
-        const closeMobileNavBtn = document.getElementById('closeMobileNavBtn');
+        const mobileNavContent = document.getElementById('mobileNavContent');
+        const closeMobileNavBtnOutside = document.getElementById('closeMobileNavBtnOutside'); // Tombol X di luar mobileNavContent
+        const closeMobileNavBtnInside = document.getElementById('closeMobileNavBtnInside'); // Tombol X di dalam mobileNavContent
 
         const sections = {
             'setor-gmail': document.getElementById('setor-gmail'),
             'tentang-kami': document.getElementById('tentang-kami'),
             'faq': document.getElementById('faq'),
-            'komunitas': document.getElementById('komunitas')
+            'komunitas': document.getElementById('komunitas'),
+            // 'daftar-tugas': document.getElementById('daftar-tugas'), // Dihapus dari nav
+            // 'tugas-saya': document.getElementById('tugas-saya'), // Dihapus dari nav
+            // 'saldo-penarikan': document.getElementById('saldo-penarikan'), // Dihapus dari nav
+            // 'riwayat-transaksi': document.getElementById('riwayat-transaksi'), // Dihapus dari nav
+            // 'akun-sosmed': document.getElementById('akun-sosmed'), // Dihapus dari nav
+            // 'leaderboard': document.getElementById('leaderboard'), // Dihapus dari nav
+            // 'logout': document.getElementById('logout') // Dihapus dari nav
         };
 
         const liveActivitySection = document.getElementById('live-activity-section');
 
+        // Fungsi untuk mereset animasi pada elemen
+        function resetElementAnimation(element) {
+            if (element) {
+                element.style.animation = 'none';
+                element.offsetHeight; // Trigger reflow
+                element.style.animation = null;
+                element.style.opacity = 0;
+                element.style.transform = 'translateY(20px)'; // Default hidden state
+            }
+        }
+
+        // Fungsi untuk mengaktifkan animasi fadeIn pada elemen
+        function animateElement(element, delay, animationType = 'fadeIn') {
+            if (element) {
+                resetElementAnimation(element);
+                element.style.animation = `${animationType} 0.6s ease-out forwards`;
+                element.style.animationDelay = delay;
+            }
+        }
+
         function showSection(targetId) {
-            // Sembunyikan semua section
+            // Sembunyikan semua section dan reset animasinya
             for (const id in sections) {
                 if (sections.hasOwnProperty(id)) {
-                    sections[id].style.display = 'none';
-                    sections[id].style.opacity = 0;
-                    sections[id].style.transform = 'translateY(20px)';
+                    const section = sections[id];
+                    section.style.display = 'none';
+                    // resetElementAnimation(section); // Reset animation for the entire section
                 }
             }
+            // Sembunyikan dan reset Live Activity
+            liveActivitySection.style.display = 'none';
+            // resetElementAnimation(liveActivitySection);
 
-            // Atur visibility Live Activity
-            if (targetId === 'setor-gmail') {
-                liveActivitySection.style.display = 'block';
-                liveActivitySection.style.opacity = 0;
-                liveActivitySection.style.transform = 'translateY(20px)';
-            } else {
-                liveActivitySection.style.display = 'none';
-            }
+            // Tampilkan section yang dituju dan picu animasinya
+            const targetSection = sections[targetId];
+            if (targetSection) {
+                targetSection.style.display = 'block';
+                // Animasi utama untuk container section
+                resetElementAnimation(targetSection);
+                targetSection.style.animation = 'popInScale 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+                targetSection.style.animationDelay = '0.2s';
 
-            // Tampilkan section yang dituju
-            if (sections[targetId]) {
-                sections[targetId].style.display = 'block';
-                sections[targetId].style.opacity = 1;
-                sections[targetId].style.transform = 'translateY(0)';
-
-                sections[targetId].scrollIntoView({ behavior: 'smooth', block: 'start' });
-
+                let baseDelay = 0.4;
                 if (targetId === 'setor-gmail') {
-                    document.querySelectorAll('#setor-gmail >.animated-item-1').forEach(el => { el.style.animation = 'none'; el.offsetHeight; el.style.animation = ''; });
-                    document.querySelectorAll('#setor-gmail >.animated-item-2').forEach(el => { el.style.animation = 'none'; el.offsetHeight; el.style.animation = ''; });
-                    document.querySelectorAll('#setor-gmail >.animated-item-3').forEach(el => { el.style.animation = 'none'; el.offsetHeight; el.style.animation = ''; });
-                    document.querySelectorAll('#setor-gmail >.animated-item-5').forEach(el => { el.style.animation = 'none'; el.offsetHeight; el.style.animation = ''; });
-                    if (liveActivitySection.style.display === 'block') {
-                        liveActivitySection.style.animation = 'none'; liveActivitySection.offsetHeight; liveActivitySection.style.animation = '';
-                    }
-                }
-                if (targetId === 'faq' || targetId === 'tentang-kami' || targetId === 'komunitas') {
-                    sections[targetId].querySelectorAll('ul li').forEach((li, index) => {
-                        li.style.setProperty('--li-delay', `${0.2 * index + 0.5}s`);
-                        li.style.animation = 'none';
-                        li.offsetHeight;
-                        li.style.animation = '';
+                    const h1Element = targetSection.querySelector('h1');
+                    const priceInfoElement = targetSection.querySelector('.price-info');
+                    
+                    animateElement(h1Element, `${baseDelay}s`);
+                    animateElement(priceInfoElement, `${baseDelay + 0.2}s`);
+                    
+                    const elementsToAnimate = [
+                        targetSection.querySelector('.rules-box'),
+                        targetSection.querySelector('.info-box'),
+                        targetSection.querySelector('form'),
+                        targetSection.querySelector('.warning-box')
+                    ];
+                    elementsToAnimate.forEach((el, index) => {
+                        animateElement(el, `${baseDelay + 0.4 + (index * 0.2)}s`);
                     });
 
+                    // Animate Live Activity Section setelah form elements
+                    if (liveActivitySection) {
+                        liveActivitySection.style.display = 'block';
+                        animateElement(liveActivitySection, `${baseDelay + 0.4 + (elementsToAnimate.length * 0.2)}s`);
+                    }
+                } 
+                // Animate list items in hidden sections (Tentang Kami, FAQ, Komunitas, dll)
+                else {
+                    // Animate h2 and p first, then list items
+                    animateElement(targetSection.querySelector('h2'), `${baseDelay}s`);
+                    const pElement = targetSection.querySelector('p');
+                    if (pElement) animateElement(pElement, `${baseDelay + 0.2}s`);
+                    
+                    const listItems = targetSection.querySelectorAll('ul li');
+                    listItems.forEach((li, index) => {
+                        animateElement(li, `${baseDelay + 0.4 + (index * 0.1)}s`);
+                    });
+
+                    // Animate whatsapp links in Komunitas section
                     if (targetId === 'komunitas') {
-                        const whatsappLinksDiv = sections[targetId].querySelector('.whatsapp-links');
+                        const whatsappLinksDiv = targetSection.querySelector('.whatsapp-links');
                         if (whatsappLinksDiv) {
-                            const numListItems = sections[targetId].querySelectorAll('ul li').length;
-                            const delayForWhatsapp = (numListItems * 0.2 + 0.8) + 's';
-                            whatsappLinksDiv.style.animation = 'none';
-                            whatsappLinksDiv.offsetHeight;
-                            whatsappLinksDiv.style.animation = `fadeIn 0.6s ease-out forwards ${delayForWhatsapp}`;
+                            const numAnimatedElementsBeforeWhatsapp = (pElement? 1 : 0) + listItems.length; // Count p and li elements for delay calculation
+                            animateElement(whatsappLinksDiv, `${baseDelay + 0.4 + (numAnimatedElementsBeforeWhatsapp * 0.1) + 0.2}s`);
                         }
                     }
                 }
+
+                targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
 
             // Atur kelas aktif pada navigasi mobile
@@ -1145,12 +1341,47 @@
         // Event listener untuk hamburger menu
         hamburgerMenuBtn.addEventListener('click', () => {
             mobileNav.classList.add('open');
-            document.body.style.overflow = 'hidden';
+            hamburgerMenuBtn.classList.add('open'); // Untuk CSS transform
+            hamburgerMenuBtn.querySelector('i').className = 'fas fa-times'; // Ganti ikon menjadi X
+            document.body.style.overflow = 'hidden'; // Mencegah scroll di body
+
+            // Animate mobile nav list items
+            const navItems = mobileNavContent.querySelectorAll('.mobile-nav-list li');
+            navItems.forEach((item, index) => {
+                // Reset animasi dulu sebelum di-trigger lagi
+                item.style.animation = 'none';
+                item.offsetHeight; // Trigger reflow
+                item.style.animation = `itemFadeIn 0.3s ease-out forwards`;
+                item.style.animationDelay = `${0.1 * index + 0.2}s`;
+            });
         });
 
-        closeMobileNavBtn.addEventListener('click', () => {
-            mobileNav.classList.remove('open');
-            document.body.style.overflow = '';
+        // Fungsi untuk menutup mobile nav
+        function closeMobileNav() {
+            mobileNav.classList.add('closing'); // Tambahkan kelas closing untuk animasi keluar
+            hamburgerMenuBtn.classList.remove('open'); // Hapus kelas open dari hamburger
+            hamburgerMenuBtn.querySelector('i').className = 'fas fa-bars'; // Ganti ikon kembali
+            document.body.style.overflow = ''; // Mengizinkan scroll kembali
+
+            mobileNavContent.addEventListener('animationend', function handler() {
+                mobileNav.classList.remove('open', 'closing');
+                mobileNavContent.removeEventListener('animationend', handler);
+                // Reset animasi item di menu setelah ditutup
+                const navItems = mobileNavContent.querySelectorAll('.mobile-nav-list li');
+                navItems.forEach(item => {
+                    item.style.animation = 'none';
+                    item.style.opacity = 0;
+                    item.style.transform = 'translateX(-20px)';
+                });
+            });
+        }
+        
+        closeMobileNavBtnOutside.addEventListener('click', closeMobileNav); // Tombol X di luar mobileNav
+        closeMobileNavBtnInside.addEventListener('click', closeMobileNav); // Tombol X di dalam mobileNav
+        mobileNav.addEventListener('click', (e) => { // Klik di overlay gelap
+            if (e.target === mobileNav) {
+                closeMobileNav();
+            }
         });
 
         // Event listener untuk klik link di mobile nav
@@ -1158,18 +1389,21 @@
             link.addEventListener('click', function(e) {
                 e.preventDefault();
                 const targetId = this.dataset.target;
-                showSection(targetId);
-                mobileNav.classList.remove('open');
-                document.body.style.overflow = '';
-            });
-        });
+                
+                // Jika klik logout, langsung log (atau handle sesuai kebutuhan)
+                if (targetId === 'logout') {
+                    console.log('User clicked logout!');
+                    // Di sini kamu bisa tambahkan logika logout, redirect, dll.
+                    // Untuk saat ini, kita akan menutup menu dan menampilkan pesan placeholder
+                    // showSection(targetId); // Jika ingin menampilkan section logout
+                    closeMobileNav(); // Tutup menu
+                    alert('Anda telah keluar.'); // Contoh sederhana
+                    return;
+                }
 
-        // Tutup mobile nav jika klik di luar konten
-        mobileNav.addEventListener('click', (e) => {
-            if (e.target === mobileNav) {
-                mobileNav.classList.remove('open');
-                document.body.style.overflow = '';
-            }
+                showSection(targetId);
+                closeMobileNav(); // Tutup menu setelah memilih section
+            });
         });
 
         // Tampilkan section 'setor-gmail' secara default saat load halaman
@@ -1267,6 +1501,7 @@
             return item;
         }
 
+        // Fungsi untuk memperbarui aktivitas dengan animasi
         function updateLiveActivity() {
             if (activityList.children.length >= 5) {
                 activityList.removeChild(activityList.lastChild);
@@ -1276,13 +1511,15 @@
             activityList.prepend(newActivity);
         }
 
+        // Initialize with a few activities
         for (let i = 0; i < 3; i++) {
             const initialActivity = generateRandomActivity();
             initialActivity.style.animationDelay = `${0.2 * i}s`;
             activityList.appendChild(initialActivity);
         }
 
-        setInterval(updateLiveActivity, Math.random() * (10000 - 5000) + 5000);
+        // Update activities at random intervals
+        setInterval(updateLiveActivity, Math.random() * (10000 - 5000) + 5000); // Acak 5-10 detik
     </script>
 </body>
 </html>
