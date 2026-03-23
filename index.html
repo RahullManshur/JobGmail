@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Setor Akun Gmail - Job Store</title>
+    <title>Setor Akun Gmail - Job Setor gmail</title>
     <!-- Google Fonts: Inter untuk tampilan modern dan bersih -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,6 +49,12 @@
 
             /* Transisi untuk properti warna */
             --color-transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+
+            /* Variabel untuk efek gradien teks */
+            --text-gradient-start: #37d396;
+            --text-gradient-end: #2ab681;
+            --text-gradient-bg-inactive-start: #a0aec0; /* Warna abu-abu untuk gradien inactive */
+            --text-gradient-bg-inactive-end: #718096;
         }
 
         /* Tema Dark Mode */
@@ -80,6 +86,12 @@
 
             --nav-link-bg-inactive: #4a5568;
             --nav-link-text-inactive: #f7fafc;
+
+            /* Variabel untuk efek gradien teks di Dark Mode */
+            --text-gradient-start: #37d396;
+            --text-gradient-end: #81e6d9; /* Gradien yang lebih terang untuk dark mode */
+            --text-gradient-bg-inactive-start: #718096;
+            --text-gradient-bg-inactive-end: #a0aec0;
         }
 
         /* Keyframes untuk animasi */
@@ -120,6 +132,13 @@
             100% { opacity: 1; transform: translateY(0); }
         }
 
+        /* Keyframes untuk animasi gradien teks */
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         /* Styling dasar untuk body */
         body {
             font-family: 'Inter', sans-serif;
@@ -143,13 +162,13 @@
         /* Atur semua transisi warna secara global untuk dark mode */
         body,.container,.rules-box,.info-box,.warning-box,
         input, textarea, button,.header.nav-links a,
-       .live-activity-section,.live-activity-item,.hidden-section,.footer,
-       .header.logo,.header.logo i, h1,.info-section h2,.info-section h2 i,
-       .rules-box h2,.rules-box h2 i,.rules-box li strong,.rules-box li i,
-       .info-box h2,.info-box h2 i,.info-box li i,.warning-box i,.warning-box span,
+      .live-activity-section,.live-activity-item,.hidden-section,.footer,
+      .header.logo,.header.logo i, h1,.info-section h2,.info-section h2 i,
+      .rules-box h2,.rules-box h2 i,.rules-box li strong,.rules-box li i,
+      .info-box h2,.info-box h2 i,.info-box li i,.warning-box i,.warning-box span,
         label,.live-activity-section h2,.live-activity-item i,.activity-details.name,
-       .activity-details.amount,.activity-details.time,.hidden-section h2,
-       .hidden-section p,.hidden-section ul,.hidden-section ul li::before,.footer a {
+      .activity-details.amount,.activity-details.time,.hidden-section h2,
+      .hidden-section p,.hidden-section ul,.hidden-section ul li::before,.footer a {
             transition: var(--color-transition);
         }
 
@@ -174,7 +193,7 @@
         }
 
         /* Header (inspirasi dari navigasi Buzzpoin) */
-       .header {
+      .header {
             width: 100%;
             max-width: 600px;
             display: flex;
@@ -185,23 +204,31 @@
             animation: fadeIn 0.8s ease-out forwards;
             animation-delay: 0.1s;
         }
-       .header.logo {
+      .header.logo { /* Perbaiki selector.header.logo menjadi.header.logo */
             display: flex;
             align-items: center;
             font-weight: 700;
             font-size: 1.5em;
             color: var(--text-dark);
+            /* Efek gradien dan animasi untuk teks logo */
+            background: linear-gradient(90deg, var(--text-gradient-start), var(--text-gradient-end), var(--text-gradient-start));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientMove 5s ease infinite;
         }
-       .header.logo i {
-            color: var(--primary-green);
+      .header.logo i { /* Perbaiki selector.header.logo i menjadi.header.logo i */
+            color: var(--primary-green); /* Ikon tetap warna solid */
             margin-right: 8px;
             font-size: 1.2em;
+            /* Pastikan ikon tidak ikut transparan */
+            -webkit-text-fill-color: var(--primary-green);
         }
-       .header.nav-links {
+      .header.nav-links { /* Perbaiki selector.header.nav-links menjadi.header.nav-links */
             display: flex; /* Memastikan item navigasi inline */
             gap: 10px; /* Jarak antar tombol */
         }
-       .header.nav-links a {
+      .header.nav-links a { /* Perbaiki selector.header.nav-links a menjadi.header.nav-links a */
             text-decoration: none;
             background-color: var(--nav-link-bg-inactive); /* Default inactive background */
             color: var(--nav-link-text-inactive); /* Default inactive text color */
@@ -211,23 +238,39 @@
             transition: all 0.3s ease;
             white-space: nowrap; /* Agar teks tidak pecah */
             margin-left: 0; /* Menghilangkan margin-left yang tidak perlu */
+
+            /* Efek gradien dan animasi untuk teks link navigasi */
+            background-image: linear-gradient(90deg, var(--text-gradient-bg-inactive-start), var(--text-gradient-bg-inactive-end));
+            background-size: 200% auto;
+            color: transparent; /* Awalnya transparan agar gradien terlihat */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientMove 8s linear infinite; /* Animasi lebih lambat */
         }
-       .header.nav-links a:hover {
+      .header.nav-links a:hover { /* Perbaiki selector.header.nav-links a:hover menjadi.header.nav-links a:hover */
             color: var(--primary-green); /* Text color on hover */
             background-color: rgba(55, 211, 150, 0.2); /* Slightly darker inactive background on hover */
+            /* Matikan efek gradien pada hover jika ingin warna solid */
+            -webkit-text-fill-color: var(--primary-green);
+            background-image: none;
+            animation: none;
         }
-       .header.nav-links a.active {
+      .header.nav-links a.active { /* Perbaiki selector.header.nav-links a.active menjadi.header.nav-links a.active */
             background-color: var(--primary-green);
             color: white;
             box-shadow: 0 4px 10px rgba(55, 211, 150, 0.3);
+            /* Aktifkan warna solid untuk teks active */
+            -webkit-text-fill-color: white;
+            background-image: none;
+            animation: none;
         }
-       .header.nav-links a.active:hover {
+      .header.nav-links a.active:hover { /* Perbaiki selector.header.nav-links a.active:hover menjadi.header.nav-links a.active:hover */
             background-color: var(--primary-green-dark);
             box-shadow: 0 6px 15px rgba(55, 211, 150, 0.4);
         }
 
         /* Styling tombol dark mode */
-       .dark-mode-toggle {
+      .dark-mode-toggle {
             background-color: var(--nav-link-bg-inactive);
             color: var(--nav-link-text-inactive);
             border: none;
@@ -243,24 +286,24 @@
             margin-left: 10px; /* Jarak dari nav links */
         }
 
-       .dark-mode-toggle:hover {
+      .dark-mode-toggle:hover {
             background-color: rgba(55, 211, 150, 0.2);
             color: var(--primary-green);
             transform: translateY(-2px);
         }
 
-       .dark-mode-toggle i {
+      .dark-mode-toggle i {
             transition: transform 0.5s ease;
         }
 
         /* Animasi ikon saat ganti mode */
-        body.dark-mode.dark-mode-toggle i {
+        body.dark-mode.dark-mode-toggle i { /* Perbaiki selector ini */
             transform: rotate(180deg); /* Animasi putar ikon saat dark mode */
             color: var(--text-dark); /* Warna ikon di dark mode */
         }
 
         /* Kontainer utama website (form card) */
-       .container {
+      .container {
             background: linear-gradient(135deg, var(--card-gradient-start), var(--card-gradient-end));
             padding: 40px;
             border-radius: 16px; /* Lebih rounded */
@@ -276,7 +319,7 @@
             transition: all 0.3s ease;
             margin-bottom: 30px; /* Jarak ke Live Activity */
         }
-       .container:hover {
+      .container:hover {
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
             transform: translateY(-5px); /* Sedikit naik saat hover */
         }
@@ -294,13 +337,13 @@
         }
 
         /* Section info/rules/warning */
-       .info-section {
+      .info-section {
             margin-bottom: 30px;
             opacity: 0;
             animation: fadeIn 0.6s ease-out forwards;
             animation-delay: 0.4s;
         }
-       .info-section h2 {
+      .info-section h2 {
             font-size: 1.4em;
             font-weight: 700;
             color: var(--text-dark);
@@ -309,10 +352,10 @@
             align-items: center;
             gap: 10px;
         }
-       .info-section h2 i {
+      .info-section h2 i {
             color: var(--primary-green); /* Ikon di judul section */
         }
-       .rules-box,.info-box,.warning-box {
+      .rules-box,.info-box,.warning-box {
             background-color: var(--bg-light); /* Lebih terang dari card utama */
             padding: 20px 25px;
             border-radius: 12px;
@@ -325,79 +368,79 @@
             opacity: 0; /* Mulai tersembunyi untuk animasi */
             animation: slideInFromLeft 0.6s ease-out forwards;
         }
-       .rules-box:hover,.info-box:hover,.warning-box:hover {
+      .rules-box:hover,.info-box:hover,.warning-box:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
         }
-       .rules-box {
+      .rules-box {
             animation-delay: 0.5s;
             background-color: var(--rules-box-bg);
             border-left: 5px solid var(--rules-box-border);
         }
-       .rules-box h2 {
+      .rules-box h2 {
             color: var(--text-dark);
             margin-bottom: 10px;
         }
-       .rules-box h2 i {
+      .rules-box h2 i {
             color: var(--rules-box-border); /* Warna ikon di rules header */
             font-size: 1.1em;
             animation: pulseLight 1.5s infinite; /* Animasi ikon pulse */
         }
-       .rules-box ul {
+      .rules-box ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-       .rules-box li {
+      .rules-box li {
             margin-bottom: 10px;
             display: flex;
             align-items: flex-start;
             gap: 10px;
             line-height: 1.5;
         }
-       .rules-box li:last-child { margin-bottom: 0; }
-       .rules-box li strong {
+      .rules-box li:last-child { margin-bottom: 0; }
+      .rules-box li strong {
             color: var(--text-dark);
         }
-       .rules-box li i {
+      .rules-box li i {
             color: var(--primary-green); /* Ikon check di list rules */
             font-size: 1em;
             margin-top: 3px;
         }
 
-       .info-box {
+      .info-box {
             animation-delay: 0.6s;
             background-color: var(--info-box-bg);
             border-left: 5px solid var(--info-box-border);
         }
-       .info-box h2 {
+      .info-box h2 {
             color: var(--text-dark);
             margin-bottom: 10px;
         }
-       .info-box h2 i {
+      .info-box h2 i {
             color: var(--info-box-border);
             font-size: 1.1em;
         }
-       .info-box ul {
+      .info-box ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-       .info-box li {
+      .info-box li {
             margin-bottom: 8px;
             display: flex;
             align-items: flex-start;
             gap: 10px;
             line-height: 1.5;
         }
-       .info-box li:last-child { margin-bottom: 0; }
-       .info-box li i {
+      .info-box li:last-child { margin-bottom: 0; }
+      .info-box li i {
             color: var(--primary-green);
             font-size: 1em;
             margin-top: 3px;
         }
 
-       .warning-box {
+      .warning-box {
             animation-delay: 0.7s;
             background-color: var(--warning-box-bg);
             border-left: 5px solid var(--warning-box-border);
@@ -407,13 +450,13 @@
             gap: 15px;
             margin-top: 25px;
         }
-       .warning-box i {
+      .warning-box i {
             color: var(--warning-box-border);
             font-size: 1.5em;
             flex-shrink: 0; /* Icon tidak mengecil */
             animation: shakeInput 0.8s infinite alternate; /* Animasi shake halus */
         }
-       .warning-box span {
+      .warning-box span {
             color: var(--text-secondary-dark);
         }
 
@@ -492,7 +535,7 @@
         }
 
         /* Styling untuk pesan feedback (sukses/error) */
-       .message {
+      .message {
             margin-top: 25px;
             text-align: center;
             font-weight: 600;
@@ -501,19 +544,19 @@
             border-radius: 10px;
             animation: fadeIn 0.5s ease-out forwards;
         }
-       .message.success {
+      .message.success {
             background-color: rgba(40, 167, 69, 0.1);
             color: var(--whatsapp-green);
             border: 1px solid var(--whatsapp-green);
         }
-       .message.error {
+      .message.error {
             background-color: rgba(220, 53, 69, 0.1);
             color: #dc3545;
             border: 1px solid #dc3545;
         }
 
         /* Styling untuk link WhatsApp (grup & testimoni) */
-       .whatsapp-links {
+      .whatsapp-links {
             margin-top: 40px;
             padding-top: 20px;
             border-top: 1px solid var(--border-light);
@@ -524,7 +567,7 @@
             animation: slideInFromRight 0.6s ease-out forwards;
             animation-delay: 1s; /* Sesuaikan delay */
         }
-       .whatsapp-links a {
+      .whatsapp-links a {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -539,17 +582,17 @@
             transition: all 0.3s ease;
             box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3);
         }
-       .whatsapp-links a:hover {
+      .whatsapp-links a:hover {
             background-color: var(--whatsapp-green-hover);
             transform: translateY(-3px) scale(1.01);
             box-shadow: 0 10px 20px rgba(37, 211, 102, 0.4);
         }
-       .whatsapp-links a i {
+      .whatsapp-links a i {
             font-size: 1.3em;
         }
 
         /* Live Activity Section */
-       .live-activity-section {
+      .live-activity-section {
             width: 100%;
             max-width: 600px;
             background-color: var(--bg-dark-card);
@@ -562,7 +605,7 @@
             animation-delay: 1.2s; /* Muncul setelah form */
             border: 1px solid var(--border-light);
         }
-       .live-activity-section h2 {
+      .live-activity-section h2 {
             text-align: center;
             font-size: 1.8em;
             font-weight: 800;
@@ -570,7 +613,7 @@
             margin-bottom: 25px;
             position: relative;
         }
-       .live-activity-section h2::after {
+      .live-activity-section h2::after {
             content: '';
             display: block;
             width: 60px;
@@ -579,12 +622,12 @@
             margin: 10px auto 0;
             border-radius: 2px;
         }
-       .live-activity-list {
+      .live-activity-list {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-       .live-activity-item {
+      .live-activity-item {
             display: flex;
             align-items: center;
             background-color: var(--activity-bg);
@@ -597,29 +640,29 @@
             opacity: 0; /* Untuk animasi individual */
             transform: translateY(10px); /* Untuk animasi individual */
         }
-       .live-activity-item:last-child {
+      .live-activity-item:last-child {
             margin-bottom: 0;
         }
-       .live-activity-item i {
+      .live-activity-item i {
             color: var(--activity-icon);
             font-size: 1.4em;
             margin-right: 15px;
         }
-       .activity-details.name {
+      .activity-details.name { /* Perbaiki selector */
             font-weight: 700;
             font-size: 1.05em;
         }
-       .activity-details.amount {
+      .activity-details.amount { /* Perbaiki selector */
             color: var(--primary-green);
             font-weight: 600;
         }
-       .activity-details.time {
+      .activity-details.time { /* Perbaiki selector */
             font-size: 0.85em;
             color: var(--text-secondary-dark);
         }
 
         /* Hidden section for Tentang Kami and FAQ */
-       .hidden-section {
+      .hidden-section {
             display: none; /* Default hidden */
             background: linear-gradient(135deg, var(--card-gradient-start), var(--card-gradient-end));
             padding: 40px;
@@ -634,29 +677,29 @@
             animation: popInScale 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
             animation-delay: 0.2s;
         }
-       .hidden-section h2 {
+      .hidden-section h2 {
             font-size: 2.2em;
             font-weight: 800;
             color: var(--text-dark);
             margin-bottom: 20px;
             text-align: center;
         }
-       .hidden-section p,.hidden-section ul {
+      .hidden-section p,.hidden-section ul {
             color: var(--text-secondary-dark);
             font-size: 1em;
             line-height: 1.8;
             margin-bottom: 15px;
         }
-       .hidden-section ul {
+      .hidden-section ul {
             list-style: none;
             padding: 0;
         }
-       .hidden-section ul li {
+      .hidden-section ul li {
             position: relative;
             padding-left: 25px;
             margin-bottom: 8px;
         }
-       .hidden-section ul li::before {
+      .hidden-section ul li::before {
             content: '\f05a'; /* Font Awesome info-circle */
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
@@ -666,7 +709,7 @@
         }
 
         /* Footer (inspirasi dari footer Buzzpoin) */
-       .footer {
+      .footer {
             width: 100%;
             max-width: 600px;
             text-align: center;
@@ -678,13 +721,13 @@
             animation: fadeIn 0.8s ease-out forwards;
             animation-delay: 1.5s; /* Sesuaikan delay */
         }
-       .footer a {
+      .footer a {
             color: var(--primary-green);
             text-decoration: none;
             font-weight: 600;
             transition: color 0.3s ease;
         }
-       .footer a:hover {
+      .footer a:hover {
             color: var(--primary-green-dark);
         }
 
@@ -693,25 +736,25 @@
             body {
                 padding: 15px;
             }
-           .header {
+          .header {
                 flex-direction: column;
                 gap: 15px;
                 margin-bottom: 20px;
             }
-           .header.nav-links {
+          .header.nav-links { /* Perbaiki selector */
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: center;
                 gap: 10px;
             }
-           .header.nav-links a {
+          .header.nav-links a { /* Perbaiki selector */
                 flex-grow: 1; /* Agar tombol mengisi lebar yang tersedia */
                 text-align: center;
             }
-           .dark-mode-toggle {
+          .dark-mode-toggle {
                 margin-left: 0; /* Hapus margin di mobile */
             }
-           .container,.live-activity-section,.hidden-section {
+          .container,.live-activity-section,.hidden-section {
                 padding: 25px;
                 border-radius: 12px;
             }
@@ -719,14 +762,14 @@
                 font-size: 2.2em;
                 margin-bottom: 20px;
             }
-           .rules-box,.info-box,.warning-box {
+          .rules-box,.info-box,.warning-box {
                 padding: 18px 20px;
             }
-           .warning-box {
+          .warning-box {
                 flex-direction: column;
                 text-align: center;
             }
-           .whatsapp-links a {
+          .whatsapp-links a {
                 padding: 12px 15px;
                 font-size: 1em;
             }
