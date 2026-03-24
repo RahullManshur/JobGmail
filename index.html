@@ -1005,10 +1005,10 @@
 
         /* Tombol "Hubungi Admin" di halaman utama (Floating Action Button) */
 .contact-admin-main-button {
-            position: fixed; /* Membuat tombol melayang */
-            bottom: 20px; /* Jarak dari bawah */
-            right: 20px; /* Jarak dari kanan */
-            left: auto; /* Membatalkan left: 20px */
+            position: fixed!important; /* Membuat tombol melayang dan memaksa fixed */
+            bottom: 20px!important; /* Jarak dari bawah */
+            right: 20px!important; /* Jarak dari kanan */
+            left: auto!important; /* Membatalkan left: 20px jika ada */
             background: linear-gradient(45deg, #37d396, #2ab681); /* Menggunakan primary green gradient */
             color: white;
             padding: 15px; /* Sesuaikan padding untuk ukuran bulat */
@@ -1018,7 +1018,7 @@
             font-size: 1.5em; /* Ukuran ikon lebih besar */
             box-shadow: 0 5px 15px rgba(55, 211, 150, 0.4);
             transition: all 0.3s ease, var(--color-transition);
-            z-index: 1000; /* Pastikan di atas konten lain, lebih tinggi dari modal mobile nav */
+            z-index: 9999!important; /* Pastikan di atas konten lain, bahkan modal */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1113,13 +1113,13 @@
                 text-align: center;
             }
            /* Tombol floating di mobile */
-     .contact-admin-main-button {
-                bottom: 15px;
-                right: 15px; /* Pindah ke kanan bawah */
-                left: auto; /* Reset left */
-                width: 50px; /* Sedikit lebih kecil di mobile */
-                height: 50px;
-                font-size: 1.3em;
+    .contact-admin-main-button {
+                bottom: 15px!important;
+                right: 15px!important; /* Pindah ke kanan bawah */
+                left: auto!important; /* Reset left */
+                width: 50px!important; /* Sedikit lebih kecil di mobile */
+                height: 50px!important;
+                font-size: 1.3em!important;
            }
         #hubungi-admin.contact-options-wrapper { /* Selector untuk wrapper di section hubungi-admin */
             max-width: 100%; /* Lebar penuh di mobile untuk wrapper tombol */
@@ -1695,7 +1695,7 @@
         setInterval(updateLiveActivity, Math.random() * (10000 - 5000) + 5000); // Acak 5-10 detik
 
         // ===============================================
-        // FUNGSI MODAL HUBUNGI ADMIN (Sekarang untuk halaman #hubungi-admin)
+        // FUNGSI NAVIGASI TOMBOL FAB KE HALAMAN HUBUNGI ADMIN
         // ===============================================
         const mainContactAdminBtn = document.getElementById('mainContactAdminBtn'); // Tombol FAB di halaman utama
 
