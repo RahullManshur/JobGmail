@@ -935,6 +935,50 @@
             left: 0;
             color: var(--primary-green);
         }
+/* Section khusus untuk Hubungi Admin */
+#hubungi-admin {
+    display: none; /* Sembunyikan secara default */
+    background: linear-gradient(135deg, var(--card-gradient-start), var(--card-gradient-end));
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px var(--shadow-normal);
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
+    border: 1px solid var(--border-light);
+    margin-bottom: 30px;
+    opacity: 0;
+    transform: translateY(20px);
+    transform-style: preserve-3d;
+    transition: all 0.3s ease, var(--color-transition);
+}
+
+#hubungi-admin h2 {
+    font-size: 2.2em;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#hubungi-admin p {
+    color: var(--text-secondary-dark);
+    font-size: 1em;
+    line-height: 1.8;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+#hubungi-admin.contact-options-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 250px; /* Batasi lebar agar tombol tidak terlalu lebar */
+    margin: 0 auto;
+}
+#hubungi-admin.contact-option-button {
+    width: 100%; /* Pastikan tombol mengisi lebar wrapper */
+}
 
         /* Footer */
 .footer {
@@ -974,7 +1018,7 @@
             font-size: 1.5em; /* Ukuran ikon lebih besar */
             box-shadow: 0 5px 15px rgba(55, 211, 150, 0.4);
             transition: all 0.3s ease, var(--color-transition);
-            z-index: 999; /* Pastikan di atas konten lain */
+            z-index: 1000; /* Pastikan di atas konten lain, lebih tinggi dari modal mobile nav */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -990,43 +1034,14 @@
             color: white; /* Pastikan ikon berwarna putih */
         }
 
-        /* Modal Contact Options */
+        /* Modal Contact Options (Sekarang sudah tidak dipakai lagi, tapi CSSnya saya biarkan siapa tahu nanti diperlukan) */
 .contact-options-modal {
             display: none; /* Sembunyikan secara default */
-            position: fixed;
-            z-index: 1001; /* Di atas mobile nav */
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.6); /* Overlay gelap */
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.3s ease-out;
         }
-
 .contact-options-content {
-            background-color: var(--bg-dark-card);
-            margin: auto;
-            padding: 30px;
-            border-radius: 16px;
-            max-width: 350px;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 10px 30px var(--shadow-normal);
-            animation: popInScale 0.3s ease-out;
-            border: 1px solid var(--border-light);
+            display: none; /* Sembunyikan secara default */
         }
-
-.contact-options-content h2 {
-            font-size: 1.5em;
-            color: var(--text-dark);
-            margin-bottom: 25px;
-            font-weight: 700;
-        }
-
-.contact-option-button {
+.contact-option-button { /* General style for contact buttons, will be used in #hubungi-admin section */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1036,12 +1051,11 @@
             text-decoration: none;
             font-weight: 600;
             font-size: 1.05em;
-            margin-bottom: 15px;
             transition: all 0.3s ease;
+            color: white; /* Default text color for these buttons */
         }
 .contact-option-button.whatsapp {
             background-color: var(--whatsapp-green);
-            color: white;
         }
 .contact-option-button.whatsapp:hover {
             background-color: var(--whatsapp-green-hover);
@@ -1050,7 +1064,6 @@
         }
 .contact-option-button.telegram {
             background-color: var(--telegram-blue);
-            color: white;
         }
 .contact-option-button.telegram:hover {
             background-color: var(--telegram-blue-hover);
@@ -1059,9 +1072,6 @@
         }
 .contact-option-button i {
             font-size: 1.2em;
-        }
-.contact-option-button:last-child {
-            margin-bottom: 0;
         }
 
         /* Responsif untuk layar kecil */
@@ -1087,7 +1097,7 @@
 .dark-mode-toggle {
                 margin-left: 0;
             }
-.container, #live-activity-section,.hidden-section {
+.container, #live-activity-section,.hidden-section, #hubungi-admin {
                 padding: 25px;
                 border-radius: 12px;
             }
@@ -1103,7 +1113,7 @@
                 text-align: center;
             }
            /* Tombol floating di mobile */
-       .contact-admin-main-button {
+      .contact-admin-main-button {
                 bottom: 15px;
                 right: 15px; /* Pindah ke kanan bawah */
                 left: auto; /* Reset left */
@@ -1111,10 +1121,9 @@
                 height: 50px;
                 font-size: 1.3em;
            }
-       .contact-options-content {
-                width: 90%;
-                padding: 25px;
-           }
+        #hubungi-admin.contact-options-wrapper {
+            max-width: 100%; /* Lebar penuh di mobile untuk wrapper tombol */
+        }
         }
     </style>
 </head>
@@ -1147,8 +1156,8 @@
                 <li><a href="#tentang-kami" class="mobile-nav-item" data-target="tentang-kami"><i class="fas fa-info-circle"></i> <span>Tentang Kami</span></a></li>
                 <li><a href="#faq" class="mobile-nav-item" data-target="faq"><i class="fas fa-question-circle"></i> <span>FAQ</span></a></li>
                 <li><a href="#komunitas" class="mobile-nav-item" data-target="komunitas"><i class="fas fa-users"></i> <span>Komunitas</span></a></li>
-                <!-- Ubah ini untuk memicu modal -->
-                <li><a href="#" class="mobile-nav-item" id="mobileContactAdminBtn"><i class="fas fa-headset"></i> <span>Hubungi Admin</span></a></li>
+                <!-- Ubah ini untuk mengarahkan ke section #hubungi-admin -->
+                <li><a href="#hubungi-admin" class="mobile-nav-item" data-target="hubungi-admin"><i class="fas fa-headset"></i> <span>Hubungi Admin</span></a></li>
             </ul>
         </div>
         <!-- Tombol close di luar mobileNavContent, untuk klik di area overlay -->
@@ -1256,31 +1265,31 @@
         <p style="margin-top: 20px;">Kami senang Anda menjadi bagian dari keluarga Job Setor Gmail!</p>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        &copy; 2026 Job Setor Gmail. All rights reserved. | <a href="#">Kebijakan Privasi</a> | <a href="#">Syarat & Ketentuan</a>
-    </footer>
-
-    <!-- Tombol "Hubungi Admin" di halaman utama (Floating Action Button) -->
-    <!-- PENTING: Tombol ini dipindahkan keluar dari <div class="container"> agar tidak terpengaruh oleh overflow: hidden; -->
-    <button class="contact-admin-main-button" id="mainContactAdminBtn" aria-label="Hubungi Admin">
-        <i class="fas fa-headset"></i>
-    </button>
-
-    <!-- Modal Contact Options -->
-    <div id="contactOptionsModal" class="contact-options-modal">
-        <div class="contact-options-content">
-            <h2>Hubungi Admin</h2>
+    <!-- Section "Hubungi Admin" (halaman baru) -->
+    <section class="hidden-section" id="hubungi-admin">
+        <h2>Hubungi Admin</h2>
+        <p>Butuh respon cepat? Jangan ragu hubungi kami melalui pilihan di bawah ini:</p>
+        <div class="contact-options-wrapper">
             <a href="https://wa.me/6288229814051" target="_blank" rel="noopener noreferrer" class="contact-option-button whatsapp">
                 <i class="fab fa-whatsapp"></i> <span>WhatsApp Admin</span>
             </a>
             <a href="https://t.me/Everythingsuckk" target="_blank" rel="noopener noreferrer" class="contact-option-button telegram">
                 <i class="fab fa-telegram-plane"></i> <span>Telegram Admin</span>
             </a>
-            <button class="close-btn" id="closeContactOptionsModal" aria-label="Tutup"><i class="fas fa-times"></i></button>
         </div>
-    </div>
+    </section>
 
+    <!-- Footer -->
+    <footer class="footer">
+        &copy; 2026 Job Setor Gmail. All rights reserved. | <a href="#">Kebijakan Privasi</a> | <a href="#">Syarat & Ketentuan</a>
+    </footer>
+
+    <!-- Tombol "Hubungi Admin" di halaman utama (Floating Action Button) -->
+    <!-- PENTING: Tombol ini dipindahkan keluar dari semua container utama -->
+    <button class="contact-admin-main-button" id="mainContactAdminBtn" aria-label="Hubungi Admin">
+        <i class="fas fa-headset"></i>
+    </button>
+    
     <script>
         // ===============================================
         // FUNGSI DARK MODE
@@ -1325,7 +1334,7 @@
         // ===============================================
         // FUNGSI NAVIGASI & HAMBURGER MENU
         // ===============================================
-        const navItems = document.querySelectorAll('.mobile-nav-list.mobile-nav-item'); // Semua item navigasi mobile
+        const navListItems = document.querySelectorAll('.mobile-nav-list li'); // Semua <li> di navigasi mobile
         const hamburgerMenuBtn = document.getElementById('hamburgerMenuBtn');
         const mobileNav = document.getElementById('mobileNav');
         const mobileNavContent = document.getElementById('mobileNavContent');
@@ -1337,6 +1346,7 @@
             'tentang-kami': document.getElementById('tentang-kami'),
             'faq': document.getElementById('faq'),
             'komunitas': document.getElementById('komunitas'),
+            'hubungi-admin': document.getElementById('hubungi-admin'), // Tambahkan section baru
             'live-activity-section': document.getElementById('live-activity-section') 
         };
 
@@ -1370,8 +1380,10 @@
                     section.style.display = 'none';
                 }
             }
-            // Sembunyikan dan reset Live Activity
-            liveActivitySection.style.display = 'none';
+            // Sembunyikan dan reset Live Activity, kecuali jika targetnya setor-gmail
+            if (targetId!== 'setor-gmail' && liveActivitySection) {
+                liveActivitySection.style.display = 'none';
+            }
 
             // Tampilkan section yang dituju dan picu animasinya
             const targetSection = sections[targetId];
@@ -1426,13 +1438,26 @@
                             animateElement(whatsappLinksDiv, `${baseDelay + 0.4 + (numAnimatedElementsBeforeWhatsapp * 0.1) + 0.2}s`);
                         }
                     }
+                    // Animate buttons in Hubungi Admin section
+                    if (targetId === 'hubungi-admin') {
+                        const contactWrapper = targetSection.querySelector('.contact-options-wrapper');
+                        if (contactWrapper) {
+                             // Animate p element before buttons
+                            animateElement(targetSection.querySelector('p'), `${baseDelay + 0.2}s`);
+                            
+                            const buttons = contactWrapper.querySelectorAll('.contact-option-button');
+                            buttons.forEach((btn, index) => {
+                                animateElement(btn, `${baseDelay + 0.4 + (index * 0.2)}s`);
+                            });
+                        }
+                    }
                 }
 
                 targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
 
             // Atur kelas aktif pada navigasi mobile
-            navItems.forEach(item => { // Ganti mobileNavLinks menjadi navItems
+            navListItems.forEach(item => { 
                 const link = item.querySelector('a');
                 if (link && link.dataset.target === targetId) {
                     link.classList.add('active');
@@ -1489,16 +1514,17 @@
             }
         });
 
-        // Event listener untuk klik link di mobile nav (selain "Hubungi Admin")
-        navItems.forEach(item => {
+        // Event listener untuk klik link di mobile nav (termasuk "Hubungi Admin")
+        navListItems.forEach(item => {
             const link = item.querySelector('a');
-            if (link && link.id!== 'mobileContactAdminBtn') { // Hanya untuk link selain "Hubungi Admin"
+            if (link) { 
                 link.addEventListener('click', function(e) {
+                    // Cek apakah ini link internal
                     const targetId = this.dataset.target;
                     if (targetId) { 
                         e.preventDefault();
                         showSection(targetId);
-                        closeMobileNav();
+                        closeMobileNav(); // Tutup menu setelah memilih section
                     }
                 });
             }
@@ -1669,45 +1695,17 @@
         setInterval(updateLiveActivity, Math.random() * (10000 - 5000) + 5000); // Acak 5-10 detik
 
         // ===============================================
-        // FUNGSI MODAL HUBUNGI ADMIN
+        // FUNGSI MODAL HUBUNGI ADMIN (Sekarang untuk halaman #hubungi-admin)
         // ===============================================
-        const mainContactAdminBtn = document.getElementById('mainContactAdminBtn');
-        const contactOptionsModal = document.getElementById('contactOptionsModal');
-        const closeContactOptionsModal = document.getElementById('closeContactOptionsModal');
+        const mainContactAdminBtn = document.getElementById('mainContactAdminBtn'); // Tombol FAB di halaman utama
 
-        function openContactOptionsModal() {
-            contactOptionsModal.style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // Mencegah scroll di body
-        }
-
-        function closeContactOptionsModalFunc() {
-            contactOptionsModal.style.display = 'none';
-            document.body.style.overflow = ''; // Mengizinkan scroll kembali
-        }
-
-        // Event listener untuk tombol utama di halaman
+        // Event listener untuk tombol FAB di halaman utama
         if (mainContactAdminBtn) { 
-            mainContactAdminBtn.addEventListener('click', openContactOptionsModal);
-        }
-        // Event listener untuk tombol di menu mobile
-        if (mobileContactAdminBtn) { // Pastikan ini adalah tombol di menu mobile
-            mobileContactAdminBtn.addEventListener('click', (e) => {
-                e.preventDefault(); // Mencegah link ke #
-                openContactOptionsModal();
-                closeMobileNav(); // Tutup menu mobile setelah membuka modal
+            mainContactAdminBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showSection('hubungi-admin'); // Arahkan ke section baru
             });
         }
-        // Event listener untuk tombol close modal
-        if (closeContactOptionsModal) { 
-            closeContactOptionsModal.addEventListener('click', closeContactOptionsModalFunc);
-        }
-
-        // Tutup modal jika klik di luar konten
-        contactOptionsModal.addEventListener('click', (e) => {
-            if (e.target === contactOptionsModal) {
-                closeContactOptionsModalFunc();
-            }
-        });
     </script>
 </body>
 </html>
