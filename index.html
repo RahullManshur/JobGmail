@@ -963,7 +963,8 @@
 .contact-admin-main-button {
             position: fixed; /* Membuat tombol melayang */
             bottom: 20px; /* Jarak dari bawah */
-            left: 20px; /* Jarak dari kiri */
+            right: 20px; /* Jarak dari kanan */
+            left: auto; /* Membatalkan left: 20px */
             background: linear-gradient(45deg, #37d396, #2ab681); /* Menggunakan primary green gradient */
             color: white;
             padding: 15px; /* Sesuaikan padding untuk ukuran bulat */
@@ -1102,14 +1103,15 @@
                 text-align: center;
             }
            /* Tombol floating di mobile */
-          .contact-admin-main-button {
+        .contact-admin-main-button {
                 bottom: 15px;
-                left: 15px;
+                right: 15px; /* Pindah ke kanan bawah */
+                left: auto; /* Reset left */
                 width: 50px; /* Sedikit lebih kecil di mobile */
                 height: 50px;
                 font-size: 1.3em;
            }
-          .contact-options-content {
+        .contact-options-content {
                 width: 90%;
                 padding: 25px;
            }
@@ -1149,7 +1151,7 @@
             </ul>
         </div>
         <!-- Tombol close di luar mobileNavContent, untuk klik di area overlay -->
-        <button class="close-btn" id="closeMobileNavBtnOutside" aria-label="Close menu"><i class="fas fa-times"></i></button> 
+        <button class="close-btn" id="closeMobileNavBtnOutside" aria-label="Tutup menu"><i class="fas fa-times"></i></button> 
     </div>
 
     <div class="container" id="setor-gmail">
@@ -1320,7 +1322,7 @@
         // ===============================================
         // FUNGSI NAVIGASI & HAMBURGER MENU
         // ===============================================
-        const mobileNavLinks = document.querySelectorAll('.mobile-nav-item');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-item'); // Selector sudah benar
         const hamburgerMenuBtn = document.getElementById('hamburgerMenuBtn');
         const mobileNav = document.getElementById('mobileNav');
         const mobileNavContent = document.getElementById('mobileNavContent');
@@ -1684,9 +1686,15 @@
             document.body.style.overflow = ''; // Mengizinkan scroll kembali
         }
 
-        mainContactAdminBtn.addEventListener('click', openContactOptionsModal);
-        mobileContactAdminBtn.addEventListener('click', openContactOptionsModal);
-        closeContactOptionsModal.addEventListener('click', closeContactOptionsModalFunc);
+        if (mainContactAdminBtn) { // Pastikan tombol ada sebelum menambahkan event listener
+            mainContactAdminBtn.addEventListener('click', openContactOptionsModal);
+        }
+        if (mobileContactAdminBtn) { // Pastikan tombol ada sebelum menambahkan event listener
+            mobileContactAdminBtn.addEventListener('click', openContactOptionsModal);
+        }
+        if (closeContactOptionsModal) { // Pastikan tombol ada sebelum menambahkan event listener
+            closeContactOptionsModal.addEventListener('click', closeContactOptionsModalFunc);
+        }
 
         // Tutup modal jika klik di luar konten
         contactOptionsModal.addEventListener('click', (e) => {
