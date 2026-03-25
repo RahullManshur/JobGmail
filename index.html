@@ -1115,7 +1115,7 @@
                 text-align: center;
             }
            /* Tombol floating di mobile */
- .contact-admin-main-button {
+.contact-admin-main-button {
                 bottom: 15px!important;
                 right: 15px!important; /* Pindah ke kanan bawah */
                 left: auto!important; /* Reset left */
@@ -1173,14 +1173,18 @@
 
         <!-- Bagian RULES -->
         <div class="rules-box">
-            <h2><i class="fas fa-gavel"></i> Rules Penting</h2>
+            <h2><i class="fas fa-gavel"></i> WAJIB SESUAI RULES</h2>
             <ul>
-                <li><i class="fas fa-info-circle"></i> <strong>Nama Akun:</strong> Bebas, hindari angka atau karakter aneh.</li>
-                <li><i class="fas fa-info-circle"></i> <strong>Password Akun:</strong> Wajib `aass1122`.</li>
-                <li><i class="fas fa-info-circle"></i> <strong>Tahun Lahir Akun:</strong> Antara `1999-2005`.</li>
-                <li><i class="fas fa-info-circle"></i> <strong>Penting:</strong> Jangan langsung logout setelah penyetoran.</li>
-                <li><i class="fas fa-info-circle"></i> <strong>Pembayaran:</strong> Dilakukan setelah cek (estimasi 1-2 jam, maksimal 24 jam).</li>
-                <li><i class="fas fa-info-circle"></i> <strong>Akun Verified:</strong> Akun yang terkena verified tidak akan dibeli / dibeli dengan rate 500p.</li>
+                <li><i class="fas fa-check-circle"></i> <strong>Nama Akun:</strong> Nama bebas + "loony" + maksimal 2 angka (lebih baik tanpa angka).<br>
+                    Contoh diterima: <code>Elaloony89@gmail.com</code> ✅<br>
+                    Contoh tidak diterima: <code>elaa23@gmail.com</code> ❌ (tidak ada "loony")
+                </li>
+                <li><i class="fas fa-calendar-alt"></i> <strong>Tahun Lahir Akun:</strong> Antara <code>1999-2002</code>.</li>
+                <li><i class="fas fa-key"></i> <strong>Password Akun:</strong> Wajib <code>aass1122</code>.</li>
+                <li><i class="fas fa-exclamation-triangle"></i> <strong>Penting:</strong> Jangan langsung logout setelah penyetoran. Ikuti info admin kapan harus logout.</li>
+                <li><i class="fas fa-mobile-alt"></i> Jika Gmail meminta verifikasi nomor telepon saat pembuatan, segera hentikan proses dan jangan lanjutkan.</li>
+                <li><i class="fas fa-money-bill-wave"></i> <strong>Pembayaran:</strong> Dilakukan setelah cek (estimasi 1-2 jam, maksimal 24 jam).</li>
+                <li><i class="fas fa-user-shield"></i> <strong>Akun Terverifikasi:</strong> Akun yang terkena verifikasi tambahan (seperti verifikasi profil) tidak akan dibeli atau akan dibeli dengan harga khusus Rp 500.</li>
             </ul>
         </div>
 
@@ -1652,7 +1656,7 @@ form.addEventListener('submit', async function (e) {
         const result = await response.json();
 
         if (result.ok) {
-            messageDiv.innerHTML = '✅ Data berhasil dikirim ke Bot Telegram! Admin akan proses segera.';
+            messageDiv.innerHTML = '✅ Data berhasil dikirim!';
             messageDiv.className = 'message success';
             form.reset();
         } else {
@@ -1724,7 +1728,7 @@ form.addEventListener('submit', async function (e) {
         const mainContactAdminBtn = document.getElementById('mainContactAdminBtn'); // Tombol FAB di halaman utama
 
         // Event listener untuk tombol FAB di halaman utama
-        if (mainContactAdminBtn) { 
+        if (mainContactAdminBtn) {
             mainContactAdminBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 showSection('hubungi-admin'); // Arahkan ke section baru
